@@ -1,4 +1,4 @@
-package ru.pft40.bugHunter;
+package ru.pft40.bugHunter.model;
 
 public class GroupData {
     private final String groupName;
