@@ -1,16 +1,28 @@
-import org.testng.annotations.BeforeMethod;
+package ru.pft40.bugHunter;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoAlertPresentException;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.Test;
+import org.testng.annotations.BeforeMethod;
 
 import java.util.concurrent.TimeUnit;
 
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.*;
-import ru.pft40.bugHunter.GroupData;
-
-public class GroupsTests {
+/**
+ * Created by BugHunter on 15.04.2017.
+ */
+public class TestBase {
     FirefoxDriver wd;
-    
+
+    public static boolean isAlertPresent(FirefoxDriver wd) {
+        try {
+            wd.switchTo().alert();
+            return true;
+        } catch (NoAlertPresentException e) {
+            return false;
+        }
+    }
+
     @BeforeMethod
     public void setUp() throws Exception {
         wd = new FirefoxDriver();
@@ -29,25 +41,15 @@ public class GroupsTests {
         wd.findElement(By.xpath("//form[@id='LoginForm']/input[3]")).click();
     }
 
-    @Test
-    public void testGroupCreation() {
-
-        goToGroupPage();
-        initGroupCreation();
-        fillGroupForm(new GroupData("FirstGroup", "Group Header", "Group Footer"));
-        submitGroupCreation();
-        returnToGroupPage();
-    }
-
-    private void returnToGroupPage() {
+    protected void returnToGroupPage() {
         wd.findElement(By.linkText("group page")).click();
     }
 
-    private void submitGroupCreation() {
+    protected void submitGroupCreation() {
         wd.findElement(By.name("submit")).click();
     }
 
-    private void fillGroupForm(GroupData groupData) {
+    protected void fillGroupForm(GroupData groupData) {
         wd.findElement(By.name("group_name")).click();
         wd.findElement(By.name("group_name")).clear();
         wd.findElement(By.name("group_name")).sendKeys(groupData.getGroupName());
@@ -59,11 +61,11 @@ public class GroupsTests {
         wd.findElement(By.name("group_footer")).sendKeys(groupData.getGroupFooter());
     }
 
-    private void initGroupCreation() {
+    protected void initGroupCreation() {
         wd.findElement(By.name("new")).click();
     }
 
-    private void goToGroupPage() {
+    protected void goToGroupPage() {
         wd.findElement(By.linkText("groups")).click();
     }
 
@@ -71,13 +73,12 @@ public class GroupsTests {
     public void tearDown() {
         wd.quit();
     }
-    
-    public static boolean isAlertPresent(FirefoxDriver wd) {
-        try {
-            wd.switchTo().alert();
-            return true;
-        } catch (NoAlertPresentException e) {
-            return false;
-        }
+
+    protected void deleteSelectedGroup() {
+        wd.findElement(By.name("delete")).click();
+    }
+
+    protected void selectGroup() {
+        wd.findElement(By.name("selected[]")).click();
     }
 }
