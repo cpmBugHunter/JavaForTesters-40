@@ -1,3 +1,5 @@
+package ru.pft40.bugHunter;
+
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
