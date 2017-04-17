@@ -3,7 +3,7 @@ package ru.pft40.bugHunter.tests;
 import org.testng.annotations.Test;
 import ru.pft40.bugHunter.model.ContactData;
 
-public class UserTests extends TestBase {
+public class ContactCreationTests extends TestBase {
 
     @Test
     public void testContactCreation() {
