@@ -13,7 +13,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void initContactCreation() {
-        click(By.linkText("add new"));
+        initContactModification(By.linkText("add new"));
     }
 
     public void fillContactForm(ContactData contactData) {
@@ -25,11 +25,11 @@ public class ContactHelper extends HelperBase {
         type(By.name("email"), contactData.geteMail());
     }
 
-    public void submitUserCreation() {
-        click(By.name("submit"));
+    public void submitUserCreation(By locator) {
+        click(locator);
     }
 
-    public void initContactModification() {
-        click(By.xpath("//*[@id=\"maintable\"]/tbody/tr[2]/td[8]/a"));
+    public void initContactModification(By locator) {
+        click(locator);
     }
 }
