@@ -1,11 +1,10 @@
 apply plugin: 'java'
-apply plugin: 'java'
 defaultTasks 'clean', 'test'
-task generateAllureReport(type: Exec) {
-    commandLine "allure", "generate allure-results"
-}
+/*task generateAllureReport(type: Exec) {
+    commandLine "allure", "generate build/allure-results"
+}*/
 sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_8
 
 repositories{
     mavenCentral()
@@ -16,20 +15,18 @@ configurations {
 dependencies{
     compile 'org.testng:testng:6.11'
     compile 'org.seleniumhq.selenium:selenium-java:2.53.1'
-    agent "org.aspectj:aspectjweaver:${aspectjVersion}"
-    compile "ru.yandex.qatools.allure:allure-testng-adaptor:${allureVersion}"
+    //compile "ru.yandex.qatools.allure:allure-report-data:${allureVersion}"
+    //compile "ru.yandex.qatools.allure:allure-testng-adaptor:${allureVersion}"
+    //agent   "org.aspectj:aspectjweaver:${aspectjVersion}"
 }
 
-test.doFirst {
+/*test.doFirst {
     jvmArgs "-javaagent:${configurations.agent.singleFile}"
 }
 
 test {
     useTestNG() {
-        //suites 'src/test/resources/testng.xml'
+        suiteXmlFiles << new File(rootDir, "testng.xml")
     }
-
-    systemProperty 'allure.results.directory', 'build/allure-results'
-    systemProperty 'allure.link.issue.pattern', 'https://github.com/allure-framework/allure-docs/issues/{}'
-    systemProperty 'allure.link.tms.pattern', 'https://github.com/allure-framework/allure-docs/issues/{}'
-}
+    systemProperties = System.properties
+}*/
