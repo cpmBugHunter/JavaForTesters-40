@@ -1,8 +1,11 @@
 apply plugin: 'java'
 apply plugin: 'java'
 defaultTasks 'clean', 'test'
+task generateAllureReport(type: Exec) {
+    commandLine "allure", "generate allure-results"
+}
 sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_7
 
 repositories{
     mavenCentral()
