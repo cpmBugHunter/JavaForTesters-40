@@ -1,6 +1,7 @@
 package ru.pft40.bugHunter.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.pft40.bugHunter.model.ContactData;
 
@@ -8,7 +9,7 @@ import ru.pft40.bugHunter.model.ContactData;
  * Created by BugHunter on 17.04.2017.
  */
 public class ContactHelper extends HelperBase {
-    public ContactHelper(FirefoxDriver wd) {
+    public ContactHelper(WebDriver wd) {
         super(wd);
     }
 

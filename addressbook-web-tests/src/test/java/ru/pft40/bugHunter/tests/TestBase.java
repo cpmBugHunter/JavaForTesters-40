@@ -1,5 +1,6 @@
 package ru.pft40.bugHunter.tests;
 
+import org.openqa.selenium.remote.BrowserType;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import ru.pft40.bugHunter.appmanager.ApplicationManager;
@@ -9,7 +10,7 @@ import ru.pft40.bugHunter.appmanager.ApplicationManager;
  */
 public class TestBase {
 
-    protected final ApplicationManager appMngr = new ApplicationManager();
+    protected final ApplicationManager appMngr = new ApplicationManager(BrowserType.CHROME);
 
     @BeforeMethod
     public void setUp() throws Exception {
