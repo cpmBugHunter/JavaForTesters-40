@@ -2,7 +2,6 @@ package ru.pft40.bugHunter.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.pft40.bugHunter.model.GroupData;
 
 /**
@@ -42,5 +41,16 @@ public class GroupHelper extends HelperBase {
 
     public void initGroupModification(By locator) {
         click(locator);
+    }
+
+    public boolean isThereAgroup() {
+        return isElementPresent(By.name("selected[]"));
+    }
+
+    public void createGroup(GroupData group, By locator) {
+        initGroupCreation(locator); //which button click on
+        fillGroupForm(group);
+        submitGroupCreation();
+        returnToGroupPage();
     }
 }

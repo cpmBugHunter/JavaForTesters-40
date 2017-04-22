@@ -10,20 +10,16 @@ public class GroupCreationTests extends TestBase {
     public void testGroupCreationByUpperCreateBtn() {
 
         appMngr.getNavigationHelper().goToGroupPage();
-        appMngr.getGroupHelper().initGroupCreation(By.xpath("//*[@id=\"content\"]/form/input[1]")); //upper Create btn
-        appMngr.getGroupHelper().fillGroupForm(new GroupData("GroupName", "Group Header", "Group Footer"));
-        appMngr.getGroupHelper().submitGroupCreation();
-        appMngr.getGroupHelper().returnToGroupPage();
+        appMngr.getGroupHelper().createGroup(new GroupData("GroupName", "Group Header", "Group Footer"),
+                By.xpath("//*[@id=\"content\"]/form/input[1]"));
     }
 
     @Test
     public void testGroupCreationByLowerCreateBtn() {
 
         appMngr.getNavigationHelper().goToGroupPage();
-        appMngr.getGroupHelper().initGroupCreation(By.xpath("//*[@id=\"content\"]/form/input[4]")); //lower Create btn
-        appMngr.getGroupHelper().fillGroupForm(new GroupData("New GroupName", null, null));
-        appMngr.getGroupHelper().submitGroupCreation();
-        appMngr.getGroupHelper().returnToGroupPage();
+        appMngr.getGroupHelper().createGroup(new GroupData("New GroupName", "Group Header", "Group Footer"),
+                By.xpath("//*[@id=\"content\"]/form/input[4]"));
     }
 
 }
