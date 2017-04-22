@@ -3,19 +3,19 @@ package ru.pft40.bugHunter.model;
 public class ContactData {
     private final String name;
     private final String lastName;
-    private final String nickName;
     private final String company;
     private final String mobilePhone;
     private final String eMail;
+    private String group;
 
-    public ContactData(String name, String lastName, String nickName, String company, String mobilePhone,
-                       String eMail) {
+    public ContactData(String name, String lastName, String company, String mobilePhone,
+                       String eMail, String group) {
         this.name = name;
         this.lastName = lastName;
-        this.nickName = nickName;
         this.company = company;
         this.mobilePhone = mobilePhone;
         this.eMail = eMail;
+        this.group = group;
     }
 
     public String getName() {
@@ -24,10 +24,6 @@ public class ContactData {
 
     public String getLastName() {
         return lastName;
-    }
-
-    public String getNickName() {
-        return nickName;
     }
 
     public String getCompany() {
@@ -40,5 +36,9 @@ public class ContactData {
 
     public String geteMail() {
         return eMail;
+    }
+
+    public String getGroup() {
+        return group;
     }
 }

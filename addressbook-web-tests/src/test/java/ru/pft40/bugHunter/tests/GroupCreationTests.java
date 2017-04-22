@@ -21,7 +21,7 @@ public class GroupCreationTests extends TestBase {
 
         appMngr.getNavigationHelper().goToGroupPage();
         appMngr.getGroupHelper().initGroupCreation(By.xpath("//*[@id=\"content\"]/form/input[4]")); //lower Create btn
-        appMngr.getGroupHelper().fillGroupForm(new GroupData("New GroupName", "Group Header", "Group Footer"));
+        appMngr.getGroupHelper().fillGroupForm(new GroupData("New GroupName", null, null));
         appMngr.getGroupHelper().submitGroupCreation();
         appMngr.getGroupHelper().returnToGroupPage();
     }

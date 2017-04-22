@@ -10,7 +10,7 @@ import ru.pft40.bugHunter.appmanager.ApplicationManager;
  */
 public class TestBase {
 
-    protected final ApplicationManager appMngr = new ApplicationManager(BrowserType.CHROME);
+    protected final ApplicationManager appMngr = new ApplicationManager(BrowserType.FIREFOX);
 
     @BeforeMethod
     public void setUp() throws Exception {
