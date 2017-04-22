@@ -1,4 +1,4 @@
-package ru.pft40.bugHunter.geometry;
+package ru.pft40.bugHunter.mathematics;
 
 /**
  * Created by BugHunter on 08.04.2017.

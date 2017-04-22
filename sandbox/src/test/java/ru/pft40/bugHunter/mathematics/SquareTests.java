@@ -1,4 +1,4 @@
-package ru.pft40.bugHunter.geometry;
+package ru.pft40.bugHunter.mathematics;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
