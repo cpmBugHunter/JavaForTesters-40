@@ -4,9 +4,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-/**
- * Created by BugHunter on 15.04.2017.
- */
 public class NavigationHelper extends HelperBase {
 
     public NavigationHelper(WebDriver wd) {

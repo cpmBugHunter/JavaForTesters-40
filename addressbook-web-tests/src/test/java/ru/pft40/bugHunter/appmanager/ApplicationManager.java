@@ -9,9 +9,7 @@ import org.openqa.selenium.remote.BrowserType;
 
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by BugHunter on 15.04.2017.
- */
+
 public class ApplicationManager {
     WebDriver wd;
     private ContactHelper contactHelper;
@@ -29,9 +27,11 @@ public class ApplicationManager {
 
         if (browser.equals(BrowserType.FIREFOX)) {
             wd = new FirefoxDriver();
-        } else if (browser.equals(BrowserType.CHROME)) {
+        }
+        else if (browser.equals(BrowserType.CHROME)) {
             wd = new ChromeDriver();
-        } else if (browser.equals(BrowserType.IE)) {
+        }
+        else if (browser.equals(BrowserType.IE)) {
             wd = new InternetExplorerDriver();
         }
         wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);

@@ -42,4 +42,12 @@ public class ContactHelper extends HelperBase {
     public void initContactModification(By locator) {
         click(locator);
     }
+
+    public boolean isThereAcontact() {
+        if(wd.findElement(By.xpath("//tr[2]//input[@type=\"checkbox\"]")) != null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

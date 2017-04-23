@@ -4,9 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import ru.pft40.bugHunter.model.GroupData;
 
-/**
- * Created by BugHunter on 15.04.2017.
- */
+
 public class GroupHelper extends HelperBase {
 
     public GroupHelper(WebDriver wd) {
