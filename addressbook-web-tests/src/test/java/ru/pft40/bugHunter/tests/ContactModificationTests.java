@@ -34,7 +34,7 @@ public class ContactModificationTests extends TestBase {
 
     @Test
     public void testContactModificationByFillContactData() throws Exception {
-        
+
         if (! appMngr.getContactHelper().isThereAcontact()) {
             appMngr.getContactHelper().initContactCreation();
             appMngr.getContactHelper().fillContactForm(new ContactData("Max", "Ivanov", "Some Company LTD",

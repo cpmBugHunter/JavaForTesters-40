@@ -9,9 +9,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.pft40.bugHunter.model.ContactData;
 
-/**
- * Created by BugHunter on 17.04.2017.
- */
+
 public class ContactHelper extends HelperBase {
     public ContactHelper(WebDriver wd) {
         super(wd);
@@ -44,10 +42,6 @@ public class ContactHelper extends HelperBase {
     }
 
     public boolean isThereAcontact() {
-        if(wd.findElement(By.xpath("//tr[2]//input[@type=\"checkbox\"]")) != null) {
-            return true;
-        } else {
-            return false;
-        }
+        return (isElementPresent(By.xpath("//tr[2]//input[@type=\"checkbox\"]")));
     }
 }
