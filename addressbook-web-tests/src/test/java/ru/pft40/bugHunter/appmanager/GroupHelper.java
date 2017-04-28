@@ -2,7 +2,10 @@ package ru.pft40.bugHunter.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import ru.pft40.bugHunter.model.GroupData;
+
+import java.util.List;
 
 
 public class GroupHelper extends HelperBase {
@@ -34,7 +37,18 @@ public class GroupHelper extends HelperBase {
     }
 
     public void selectGroup(By locator) {
-        click(locator);
+        wd.findElement(locator).click();
+    }
+
+    public void selectGroup(int index) {
+        List<WebElement> groups = wd.findElements(By.name("selected[]"));
+        if (index >= 0 && index < groups.size()) {
+            wd.findElements(By.name("selected[]")).get(index).click();
+        } else if (index < 0){
+            wd.findElements(By.name("selected[]")).get(0).click();
+        } else {
+            wd.findElements(By.name("selected[]")).get(groups.size() - 1).click();
+        }
     }
 
     public void initGroupModification(By locator) {
