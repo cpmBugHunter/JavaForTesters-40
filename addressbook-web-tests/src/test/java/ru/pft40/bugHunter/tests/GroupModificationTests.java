@@ -4,9 +4,7 @@ import org.openqa.selenium.By;
 import org.testng.annotations.Test;
 import ru.pft40.bugHunter.model.GroupData;
 
-/**
- * Created by BugHunter on 17.04.2017.
- */
+
 public class GroupModificationTests extends TestBase {
 
     @Test
