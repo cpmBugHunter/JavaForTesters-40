@@ -12,7 +12,7 @@ public class ContactModificationTests extends TestBase {
         if (! appMngr.getContactHelper().isThereAcontact()) {
             appMngr.getContactHelper().initContactCreation();
             appMngr.getContactHelper().fillContactForm(new ContactData("Max", "Ivanov", "Some Company LTD",
-                    "+7(909)123-45-89", "madMax@mail.com", "New group name"), true);
+                    "+7(909)123-45-89", "madMax@mail.com", null), false);
         }
         appMngr.getContactHelper().initContactModification(By.xpath("//*[@id=\"maintable\"]/tbody/tr[2]/td[8]/a"));
         appMngr.getContactHelper().type(By.name("firstname"), "Oleg");
@@ -25,7 +25,7 @@ public class ContactModificationTests extends TestBase {
         if (! appMngr.getContactHelper().isThereAcontact()) {
             appMngr.getContactHelper().initContactCreation();
             appMngr.getContactHelper().fillContactForm(new ContactData("Max", "Ivanov", "Some Company LTD",
-                    "+7(909)123-45-89", "madMax@mail.com", "New group name"), true);
+                    "+7(909)123-45-89", "madMax@mail.com", null), false);
         }
         appMngr.getContactHelper().initContactModification(By.xpath("//*[@id=\"maintable\"]/tbody/tr[2]/td[8]/a"));
         appMngr.getContactHelper().type(By.name("address"), "Vladivostok, Lenin str., 15 ap.56");
@@ -38,7 +38,7 @@ public class ContactModificationTests extends TestBase {
         if (! appMngr.getContactHelper().isThereAcontact()) {
             appMngr.getContactHelper().initContactCreation();
             appMngr.getContactHelper().fillContactForm(new ContactData("Max", "Ivanov", "Some Company LTD",
-                    "+7(909)123-45-89", "madMax@mail.com", "New group name"), true);
+                    "+7(909)123-45-89", "madMax@mail.com"), false);
         }
         appMngr.getContactHelper().initContactModification(By.xpath("//*[@id=\"maintable\"]/tbody/tr[2]/td[8]/a"));
         appMngr.getContactHelper().fillContactForm(new ContactData("Max", "Ivanov", "Some Company LTD",
