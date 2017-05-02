@@ -6,9 +6,7 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-/**
- * Created by BugHunter on 15.04.2017.
- */
+
 public class HelperBase {
     protected WebDriver wd;
 
