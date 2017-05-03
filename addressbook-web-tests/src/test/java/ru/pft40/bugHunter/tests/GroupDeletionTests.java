@@ -10,7 +10,7 @@ import java.util.List;
 public class GroupDeletionTests extends TestBase{
 
     @Test
-    public void testGroupDeletionByUpperDeleteBtn() throws Exception {
+    public void testGroupDeletionByUpperDeleteBtn() {
         appMngr.getNavigationHelper().goToGroupPage();
         precondition();
         List<GroupData> before = appMngr.getGroupHelper().getGroupList();
@@ -25,7 +25,7 @@ public class GroupDeletionTests extends TestBase{
     }
 
     @Test
-    public void testGroupDeletionByLowerDeleteBtn() throws Exception {
+    public void testGroupDeletionByLowerDeleteBtn() {
         appMngr.getNavigationHelper().goToGroupPage();
         precondition();
         List<GroupData> before = appMngr.getGroupHelper().getGroupList();

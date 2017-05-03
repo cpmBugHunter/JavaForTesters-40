@@ -2,9 +2,14 @@ package ru.pft40.bugHunter.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.pft40.bugHunter.model.ContactData;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class ContactHelper extends HelperBase {
@@ -46,7 +51,31 @@ public class ContactHelper extends HelperBase {
         click(locator);
     }
 
+    public void initContactModification(int index) {
+        List<WebElement> elements = wd.findElements(By.xpath("//*[@id=\"maintable\"]/tbody//td[8]"));
+        if (index >= 0 && index < elements.size()) {
+            elements.get(index).click();
+        } else if (index < 0){
+            elements.get(0).click();
+        } else {
+            elements.get(elements.size() - 1).click();
+        }
+    }
+
     public boolean isThereAcontact() {
         return (isElementPresent(By.xpath("//tr[2]//input[@type=\"checkbox\"]")));
+    }
+
+    public List<ContactData> getContactsList() {
+        List<ContactData> contacts = new ArrayList<>();
+        List<WebElement> elements = wd.findElements(By.name("entry"));
+        for (WebElement element : elements) {
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+            String lastName = element.findElements(By.tagName("td")).get(1).getText();
+            String firstName = element.findElements(By.tagName("td")).get(2).getText();
+            ContactData contact = new ContactData(id, firstName, lastName);
+            contacts.add(contact);
+        }
+        return contacts;
     }
 }
