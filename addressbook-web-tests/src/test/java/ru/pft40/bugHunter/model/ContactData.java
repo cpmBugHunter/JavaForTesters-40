@@ -9,6 +9,15 @@ public class ContactData {
     private final String eMail;
     private String group;
 
+    public ContactData(int id, String name, String lastName) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.company = null;
+        this.eMail = null;
+        this.mobilePhone = null;
+    }
+
     public ContactData(String name, String lastName, String company, String mobilePhone,
                        String eMail, String group) {
         this.id = 0;
@@ -30,21 +39,11 @@ public class ContactData {
         this.eMail = eMail;
     }
 
-    public ContactData(int id, String name, String lastName) {
-        this.id = id;
-        this.name = name;
-        this.lastName = lastName;
-        this.company = null;
-        this.eMail = null;
-        this.mobilePhone = null;
-    }
-
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
-
         this.id = id;
     }
 

@@ -6,7 +6,6 @@ import org.testng.annotations.Test;
 import ru.pft40.bugHunter.model.GroupData;
 
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
 
 public class GroupCreationTests extends TestBase {
@@ -40,9 +39,10 @@ public class GroupCreationTests extends TestBase {
         List<GroupData> after = appMngr.getGroupHelper().getGroupList();
         Assert.assertEquals(after.size(), before.size() + 1);
 
-        group.setId(after.stream().max((o1, o2) -> Integer.compare(o1.getId(), o2.getId())).get().getId());
         before.add(group);
-        Assert.assertEquals(new HashSet<>(before), new HashSet<>(after));
+        Comparator<? super GroupData> byId = Comparator.comparingInt(GroupData::getId);
+        before.sort(byId);
+        after.sort(byId);
+        Assert.assertEquals(before, after);
     }
-
 }
