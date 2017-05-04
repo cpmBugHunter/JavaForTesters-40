@@ -16,37 +16,41 @@ public class ContactModificationTests extends TestBase {
         precondition();
         List<ContactData> before = appMngr.getContactHelper().getContactsList();
         appMngr.getContactHelper().initContactModification(before.size() - 1);
-        appMngr.getContactHelper().type(By.name("firstname"), "Oleg");
-        appMngr.getContactHelper().type(By.name("address"), "Moscow, Pushkin str., 12/1 ap.34");
+        ContactData contact = new ContactData(before.get(before.size() - 1).getId(), "Max", "Ivanov");
+        appMngr.getContactHelper().type(By.name("firstname"), contact.getName());
+        appMngr.getContactHelper().type(By.name("lastname"), contact.getLastName());
         appMngr.getContactHelper().click(By.xpath("//*[@value=\"Update\"][1]")); // upper update button
         appMngr.getNavigationHelper().goToHomePage();
         List<ContactData> after = appMngr.getContactHelper().getContactsList();
-        Assert.assertEquals(after.size(), before.size() - 1);
+        Assert.assertEquals(after.size(), before.size());
 
-//        before.remove(before.size() - 1);
-//        before.add(group);
-//        Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
-//        before.sort(byId);
-//        after.sort(byId);
-//        Assert.assertEquals(before, after);
+        before.remove(before.size() - 1);
+        before.add(contact);
+        Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
+        before.sort(byId);
+        after.sort(byId);
+        Assert.assertEquals(before, after);
     }
 
     @Test
-    public void testContactModificationByLowerUpdateBtn() throws Exception {
+    public void testContactModificationByLowerUpdateBtn() {
         precondition();
-        appMngr.getContactHelper().initContactModification(By.xpath("//*[@id=\"maintable\"]/tbody/tr[2]/td[8]/a"));
-        appMngr.getContactHelper().type(By.name("address"), "Vladivostok, Lenin str., 15 ap.56");
-        appMngr.getContactHelper().click(By.xpath("//*[@value=\"Update\"][2]")); // lower update button
-    }
-
-    @Test
-    public void testContactModificationByFillContactData() {
-        precondition();
-        appMngr.getContactHelper().initContactModification(By.xpath("//*[@id=\"maintable\"]/tbody/tr[2]/td[8]/a"));
-        appMngr.getContactHelper().fillContactForm(new ContactData("Max", "Ivanov", "Some Company LTD",
-                "+7(909)123-45-89", "madMax@mail.com", null), false);
+        List<ContactData> before = appMngr.getContactHelper().getContactsList();
+        appMngr.getContactHelper().initContactModification(before.size() - 1);
+        ContactData contact = new ContactData(before.get(before.size() - 1).getId(), "Max", "Ivanov");
+        appMngr.getContactHelper().type(By.name("firstname"), contact.getName());
+        appMngr.getContactHelper().type(By.name("lastname"), contact.getLastName());
         appMngr.getContactHelper().click(By.xpath("//*[@value=\"Update\"][2]")); // lower update button
         appMngr.getNavigationHelper().goToHomePage();
+        List<ContactData> after = appMngr.getContactHelper().getContactsList();
+        Assert.assertEquals(after.size(), before.size());
+
+        before.remove(before.size() - 1);
+        before.add(contact);
+        Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
+        before.sort(byId);
+        after.sort(byId);
+        Assert.assertEquals(before, after);
     }
 
     private void precondition() {
@@ -54,7 +58,9 @@ public class ContactModificationTests extends TestBase {
         if (! appMngr.getContactHelper().isThereAcontact()) {
             appMngr.getContactHelper().initContactCreation();
             appMngr.getContactHelper().fillContactForm(new ContactData("Max", "Ivanov", "Some Company LTD",
-                    "+7(909)123-45-89", "madMax@mail.com", null), false);
+                    "+7(909)123-45-89", "madMax@mail.com"));
+            appMngr.getContactHelper().submitUserCreation(By.xpath("//*[@name=\"submit\"][1]")); //upper Enter btn
         }
+        appMngr.getNavigationHelper().goToHomePage();
     }
 }

@@ -22,7 +22,7 @@ public class ContactData {
 
     public ContactData(String name, String lastName, String company, String mobilePhone,
                        String eMail) {
-        this.id = 0;
+        this.id = Integer.MAX_VALUE;
         this.name = name;
         this.lastName = lastName;
         this.company = company;
