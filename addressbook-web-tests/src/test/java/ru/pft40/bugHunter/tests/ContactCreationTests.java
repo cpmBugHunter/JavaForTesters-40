@@ -39,7 +39,7 @@ public class ContactCreationTests extends TestBase {
         ContactData contact = new ContactData("Max", "Ivanov", "Some Company LTD",
                 "+7(909)123-45-89", "madMax@mail.com");
         appMngr.getContactHelper().fillContactForm(contact);
-        appMngr.getContactHelper().submitUserCreation(By.xpath("//*[@name=\"submit\"]2]")); //lower Enter btn
+        appMngr.getContactHelper().submitUserCreation(By.xpath("//*[@name=\"submit\"][2]")); //lower Enter btn
         appMngr.getNavigationHelper().goToHomePage(); //переход на главную для проверки создания контакта
         List<ContactData> after = appMngr.getContactHelper().getContactsList();
         Assert.assertEquals(after.size(), before.size() + 1);
