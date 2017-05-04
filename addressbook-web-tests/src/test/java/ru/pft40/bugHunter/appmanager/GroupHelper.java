@@ -29,12 +29,14 @@ public class GroupHelper extends HelperBase {
         type(By.name("group_footer"), groupData.getGroupFooter());
     }
 
-    public void initGroupCreation(By locator) {
-        click(locator);
+    public void initGroupCreation(int btn) {
+        String xPath = String.format("//*[@name=\"new\"][%d]", btn); // may be 1 or 2 (upper or lower button)
+        click(By.xpath(xPath));
     }
 
-    public void deleteSelectedGroup(By locator) {
-        click(locator);
+    public void deleteSelectedGroup(int btn) {
+        String xPath = String.format("//*[@name=\"delete\"][%d]", btn); // may be 1 or 2 (upper or lower button)
+        click(By.xpath(xPath));
     }
 
     public void selectGroup(By locator) {
@@ -52,16 +54,31 @@ public class GroupHelper extends HelperBase {
         }
     }
 
-    public void initGroupModification(By locator) {
-        click(locator);
+    public void modify(int index, GroupData group, int btn) { // btn may be 1 or 2 (upper or lower button)
+        selectGroup(index);
+        initGroupModification(btn); // Edit btn
+        type(By.xpath("//*[@name=\"group_name\"]"), group.getGroupName());
+        click(By.xpath("//*[@value=\"Update\"]"));
+        returnToGroupPage();
+    }
+
+    public void delete(int index, int btn) {
+        selectGroup(index);
+        deleteSelectedGroup(btn);
+        returnToGroupPage();
+    }
+
+    public void initGroupModification(int btn) {
+        String xPath = String.format("//*[@name=\"edit\"][%d]", btn); // may be 1 or 2 (upper or lower button)
+        click(By.xpath(xPath));
     }
 
     public boolean isThereAgroup() {
         return isElementPresent(By.name("selected[]"));
     }
 
-    public void createGroup(GroupData group, By locator) {
-        initGroupCreation(locator); //which button click on
+    public void create(GroupData group, int btn) {
+        initGroupCreation(btn); //which button click on
         fillGroupForm(group);
         submitGroupCreation();
         returnToGroupPage();
@@ -71,7 +88,7 @@ public class GroupHelper extends HelperBase {
         return wd.findElements(By.name("selected[]")).size();
     }
 
-    public List<GroupData> getGroupList() {
+    public List<GroupData> list() {
         List<GroupData> groups = new ArrayList<>();
         List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
         for(WebElement element : elements) {

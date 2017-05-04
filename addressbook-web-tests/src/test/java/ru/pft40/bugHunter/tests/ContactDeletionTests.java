@@ -16,7 +16,7 @@ public class ContactDeletionTests extends TestBase {
         List<ContactData> before = appMngr.getContactHelper().getContactsList();
         appMngr.getContactHelper().initContactModification(By.xpath("//tr[2]//a[contains (@href, 'edit')]"));
         appMngr.getContactHelper().click(By.xpath("//input[@value=\"Delete\"]")); //delete button
-        appMngr.getNavigationHelper().goToHomePage();
+        appMngr.goTo().goToHomePage();
         List<ContactData> after = appMngr.getContactHelper().getContactsList();
         Assert.assertEquals(after.size(), before.size() - 1);
 
@@ -31,7 +31,7 @@ public class ContactDeletionTests extends TestBase {
         appMngr.getContactHelper().click(By.xpath("//tr[2]//input[@type=\"checkbox\"]")); //first contact
         appMngr.getContactHelper().click(By.xpath("//input[@value=\"Delete\"]")); //delete button
         appMngr.getContactHelper().alertAccept();
-        appMngr.getNavigationHelper().goToHomePage();
+        appMngr.goTo().goToHomePage();
         List<ContactData> after = appMngr.getContactHelper().getContactsList();
         Assert.assertEquals(after.size(), before.size() - 1);
 
@@ -40,7 +40,7 @@ public class ContactDeletionTests extends TestBase {
     }
 
     private void precondition() {
-        appMngr.getNavigationHelper().goToHomePage();
+        appMngr.goTo().goToHomePage();
         if (! appMngr.getContactHelper().isThereAcontact()) {
             appMngr.getContactHelper().initContactCreation();
             appMngr.getContactHelper().fillContactForm(new ContactData("Max", "Ivanov", "Some Company LTD",

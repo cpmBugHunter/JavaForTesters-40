@@ -20,7 +20,7 @@ public class ContactModificationTests extends TestBase {
         appMngr.getContactHelper().type(By.name("firstname"), contact.getName());
         appMngr.getContactHelper().type(By.name("lastname"), contact.getLastName());
         appMngr.getContactHelper().click(By.xpath("//*[@value=\"Update\"][1]")); // upper update button
-        appMngr.getNavigationHelper().goToHomePage();
+        appMngr.goTo().goToHomePage();
         List<ContactData> after = appMngr.getContactHelper().getContactsList();
         Assert.assertEquals(after.size(), before.size());
 
@@ -41,7 +41,7 @@ public class ContactModificationTests extends TestBase {
         appMngr.getContactHelper().type(By.name("firstname"), contact.getName());
         appMngr.getContactHelper().type(By.name("lastname"), contact.getLastName());
         appMngr.getContactHelper().click(By.xpath("//*[@value=\"Update\"][2]")); // lower update button
-        appMngr.getNavigationHelper().goToHomePage();
+        appMngr.goTo().goToHomePage();
         List<ContactData> after = appMngr.getContactHelper().getContactsList();
         Assert.assertEquals(after.size(), before.size());
 
@@ -54,13 +54,13 @@ public class ContactModificationTests extends TestBase {
     }
 
     private void precondition() {
-        appMngr.getNavigationHelper().goToHomePage();
+        appMngr.goTo().goToHomePage();
         if (! appMngr.getContactHelper().isThereAcontact()) {
             appMngr.getContactHelper().initContactCreation();
             appMngr.getContactHelper().fillContactForm(new ContactData("Max", "Ivanov", "Some Company LTD",
                     "+7(909)123-45-89", "madMax@mail.com"));
             appMngr.getContactHelper().submitUserCreation(By.xpath("//*[@name=\"submit\"][1]")); //upper Enter btn
         }
-        appMngr.getNavigationHelper().goToHomePage();
+        appMngr.goTo().goToHomePage();
     }
 }
