@@ -19,22 +19,22 @@ public class GroupHelper extends HelperBase {
         click(By.linkText("group page"));
     }
 
-    public void submitGroupCreation() {
+    public void submitCreation() {
         click(By.name("submit"));
     }
 
-    public void fillGroupForm(GroupData groupData) {
+    public void fillForm(GroupData groupData) {
         type(By.name("group_name"), groupData.getGroupName());
         type(By.name("group_header"), groupData.getGroupHeader());
         type(By.name("group_footer"), groupData.getGroupFooter());
     }
 
-    public void initGroupCreation(int btn) {
+    public void initCreation(int btn) {
         String xPath = String.format("//*[@name=\"new\"][%d]", btn); // may be 1 or 2 (upper or lower button)
         click(By.xpath(xPath));
     }
 
-    public void deleteSelectedGroup(int btn) {
+    public void deleteSelected(int btn) {
         String xPath = String.format("//*[@name=\"delete\"][%d]", btn); // may be 1 or 2 (upper or lower button)
         click(By.xpath(xPath));
     }
@@ -64,7 +64,7 @@ public class GroupHelper extends HelperBase {
 
     public void delete(int index, int btn) {
         selectGroup(index);
-        deleteSelectedGroup(btn);
+        deleteSelected(btn);
         returnToGroupPage();
     }
 
@@ -78,9 +78,9 @@ public class GroupHelper extends HelperBase {
     }
 
     public void create(GroupData group, int btn) {
-        initGroupCreation(btn); //which button click on
-        fillGroupForm(group);
-        submitGroupCreation();
+        initCreation(btn); //which button click on
+        fillForm(group);
+        submitCreation();
         returnToGroupPage();
     }
 
