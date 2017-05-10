@@ -8,7 +8,6 @@ import org.testng.Assert;
 import ru.pft40.bugHunter.model.ContactData;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -52,7 +51,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void initContactModification(int index) {
-        List<WebElement> elements = wd.findElements(By.xpath("//*[@id=\"maintable\"]/tbody//td[8]"));
+        List<WebElement> elements = wd.findElements(By.xpath("//img[@title=\"Edit\"]"));
         if (index >= 0 && index < elements.size()) {
             elements.get(index).click();
         } else if (index < 0){
@@ -63,7 +62,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public boolean isThereAcontact() {
-        return (isElementPresent(By.xpath("//tr[2]//input[@type=\"checkbox\"]")));
+        return (isElementPresent(By.xpath("//input[@type=\"checkbox\"]")));
     }
 
     public List<ContactData> getContactsList() {
