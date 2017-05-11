@@ -51,14 +51,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void initContactModification(int index) {
-        List<WebElement> elements = wd.findElements(By.xpath("//img[@title=\"Edit\"]"));
-        if (index >= 0 && index < elements.size()) {
-            elements.get(index).click();
-        } else if (index < 0){
-            elements.get(0).click();
-        } else {
-            elements.get(elements.size() - 1).click();
-        }
+        wd.findElements(By.xpath("//img[@title=\"Edit\"]")).get(index).click();
     }
 
     public boolean isThereAcontact() {

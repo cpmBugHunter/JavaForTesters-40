@@ -44,14 +44,7 @@ public class GroupHelper extends HelperBase {
     }
 
     public void selectGroup(int index) {
-        List<WebElement> groups = wd.findElements(By.name("selected[]"));
-        if (index >= 0 && index < groups.size()) {
             wd.findElements(By.name("selected[]")).get(index).click();
-        } else if (index < 0){
-            wd.findElements(By.name("selected[]")).get(0).click();
-        } else {
-            wd.findElements(By.name("selected[]")).get(groups.size() - 1).click();
-        }
     }
 
     public void modify(int index, GroupData group, int btn) { // btn may be 1 or 2 (upper or lower button)
@@ -82,10 +75,6 @@ public class GroupHelper extends HelperBase {
         fillForm(group);
         submitCreation();
         returnToGroupPage();
-    }
-
-    public int getGroupCount() {
-        return wd.findElements(By.name("selected[]")).size();
     }
 
     public List<GroupData> list() {
