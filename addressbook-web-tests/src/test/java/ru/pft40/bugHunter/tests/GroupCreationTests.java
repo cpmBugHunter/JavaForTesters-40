@@ -12,7 +12,6 @@ public class GroupCreationTests extends TestBase {
     public void testGroupCreationByUpperCreateBtn() {
 
         appMngr.goTo().groupPage();
-        appMngr.goTo().groupPage();
         Set<GroupData> before = appMngr.group().all();
         GroupData group = new GroupData().withName("GroupName");
         appMngr.group().create(group, 1);
