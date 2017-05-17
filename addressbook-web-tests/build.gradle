@@ -17,6 +17,7 @@ dependencies{
     compile 'org.seleniumhq.selenium:selenium-java:2.53.1'
     agent "org.aspectj:aspectjweaver:${aspectjVersion}"
     compile "ru.yandex.qatools.allure:allure-testng-adaptor:${allureVersion}"
+    compile 'org.hamcrest:java-hamcrest:2.0.0.0'
 }
 
 test.doFirst {

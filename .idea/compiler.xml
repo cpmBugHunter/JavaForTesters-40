@@ -2,7 +2,7 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="addressbook-web-tests_main" target="1.7" />
+      <module name="addressbook-web-tests_main" target="1.8" />
       <module name="addressbook-web-tests_test" target="1.8" />
       <module name="PFT40-addressbook-web-tests_main" target="1.8" />
       <module name="sandbox_main" target="1.8" />

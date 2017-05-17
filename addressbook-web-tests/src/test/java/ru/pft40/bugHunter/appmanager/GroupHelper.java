@@ -5,8 +5,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.pft40.bugHunter.model.GroupData;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 public class GroupHelper extends HelperBase {
@@ -24,9 +25,9 @@ public class GroupHelper extends HelperBase {
     }
 
     public void fillForm(GroupData groupData) {
-        type(By.name("group_name"), groupData.getGroupName());
-        type(By.name("group_header"), groupData.getGroupHeader());
-        type(By.name("group_footer"), groupData.getGroupFooter());
+        type(By.name("group_name"), groupData.getName());
+        type(By.name("group_header"), groupData.getHeader());
+        type(By.name("group_footer"), groupData.getFooter());
     }
 
     public void initCreation(int btn) {
@@ -39,36 +40,25 @@ public class GroupHelper extends HelperBase {
         click(By.xpath(xPath));
     }
 
-    public void selectGroup(By locator) {
-        wd.findElement(locator).click();
+    private void selectById(int id) {
+        wd.findElement(By.cssSelector("input[value='" + id +"']")).click();
     }
 
-    public void selectGroup(int index) {
-        List<WebElement> groups = wd.findElements(By.name("selected[]"));
-        if (index >= 0 && index < groups.size()) {
-            wd.findElements(By.name("selected[]")).get(index).click();
-        } else if (index < 0){
-            wd.findElements(By.name("selected[]")).get(0).click();
-        } else {
-            wd.findElements(By.name("selected[]")).get(groups.size() - 1).click();
-        }
-    }
-
-    public void modify(int index, GroupData group, int btn) { // btn may be 1 or 2 (upper or lower button)
-        selectGroup(index);
-        initGroupModification(btn); // Edit btn
-        type(By.xpath("//*[@name=\"group_name\"]"), group.getGroupName());
+    public void modify(GroupData group, int btn) { // btn may be 1 or 2 (upper or lower button)
+        selectById(group.getId());
+        initModification(btn); // Edit btn
+        type(By.xpath("//*[@name=\"group_name\"]"), group.getName());
         click(By.xpath("//*[@value=\"Update\"]"));
         returnToGroupPage();
     }
 
-    public void delete(int index, int btn) {
-        selectGroup(index);
+    public void delete(GroupData group, int btn) {
+        selectById(group.getId());
         deleteSelected(btn);
         returnToGroupPage();
     }
 
-    public void initGroupModification(int btn) {
+    public void initModification(int btn) {
         String xPath = String.format("//*[@name=\"edit\"][%d]", btn); // may be 1 or 2 (upper or lower button)
         click(By.xpath(xPath));
     }
@@ -84,18 +74,13 @@ public class GroupHelper extends HelperBase {
         returnToGroupPage();
     }
 
-    public int getGroupCount() {
-        return wd.findElements(By.name("selected[]")).size();
-    }
-
-    public List<GroupData> list() {
-        List<GroupData> groups = new ArrayList<>();
+    public Set<GroupData> all() {
+        Set<GroupData> groups = new HashSet<>();
         List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
         for(WebElement element : elements) {
             String name = element.getText();
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            GroupData group = new GroupData(id, name, null, null);
-            groups.add(group);
+            groups.add(new GroupData().withId(id).withName(name));
         }
         return groups;
     }

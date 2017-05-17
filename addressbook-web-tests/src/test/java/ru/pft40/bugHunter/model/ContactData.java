@@ -1,70 +1,66 @@
 package ru.pft40.bugHunter.model;
 
 public class ContactData {
-    private int id;
-    private final String name;
-    private final String lastName;
-    private final String company;
-    private final String mobilePhone;
-    private final String eMail;
+    private int id = Integer.MAX_VALUE;
+    private String name;
+    private String lastName;
+    private String company;
+    private String mobilePhone;
+    private String eMail;
     private String group;
 
-    public ContactData(int id, String name, String lastName) {
-        this.id = id;
-        this.name = name;
-        this.lastName = lastName;
-        this.company = null;
-        this.eMail = null;
-        this.mobilePhone = null;
-    }
-
-    public ContactData(String name, String lastName, String company, String mobilePhone,
-                       String eMail, String group) {
-        this.id = 0;
-        this.name = name;
-        this.lastName = lastName;
-        this.company = company;
-        this.mobilePhone = mobilePhone;
-        this.eMail = eMail;
-        this.group = group;
-    }
-
-    public ContactData(String name, String lastName, String company, String mobilePhone,
-                       String eMail) {
-        this.id = Integer.MAX_VALUE;
-        this.name = name;
-        this.lastName = lastName;
-        this.company = company;
-        this.mobilePhone = mobilePhone;
-        this.eMail = eMail;
-    }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public ContactData withId(int id) {
         this.id = id;
+        return  this;
     }
 
     public String getName() {
         return name;
     }
 
+    public ContactData withName(String name) {
+        this.name = name;
+        return  this;
+    }
+
     public String getLastName() {
         return lastName;
+    }
+
+    public ContactData withLastName(String lastName) {
+        this.lastName = lastName;
+        return  this;
     }
 
     public String getCompany() {
         return company;
     }
 
+    public ContactData withCompany(String company) {
+        this.company = company;
+        return  this;
+    }
+
     public String getMobilePhone() {
         return mobilePhone;
     }
+    public ContactData withMobilePhone(String phone) {
+        this.mobilePhone = phone;
+        return  this;
+    }
 
-    public String geteMail() {
+    public String getEmail() {
         return eMail;
+    }
+
+    public ContactData withEmail(String email) {
+        this.eMail = email;
+        return  this;
     }
 
     public String getGroup() {
@@ -73,7 +69,7 @@ public class ContactData {
 
     @Override
     public String toString() {
-        return "ContactData{" + "id=" + id + ", name='" + name + '\'' + ", lastName='" + lastName + '\'' + ", company='" + company + '\'' + ", mobilePhone='" + mobilePhone + '\'' + ", eMail='" + eMail + '\'' + ", group='" + group + '\'' + '}';
+        return "ContactData{" + "id=" + id + ", name='" + name + '\'' + ", lastName='" + lastName + '\'' + '}';
     }
 
     @Override
@@ -83,14 +79,17 @@ public class ContactData {
 
         ContactData that = (ContactData) o;
 
+        if (id != that.id) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         return lastName != null ? lastName.equals(that.lastName) : that.lastName == null;
     }
 
     @Override
     public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         return result;
     }
+
 }

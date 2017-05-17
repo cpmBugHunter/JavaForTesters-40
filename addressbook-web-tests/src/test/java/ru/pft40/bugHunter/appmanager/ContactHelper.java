@@ -8,8 +8,9 @@ import org.testng.Assert;
 import ru.pft40.bugHunter.model.ContactData;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 public class ContactHelper extends HelperBase {
@@ -17,16 +18,16 @@ public class ContactHelper extends HelperBase {
         super(wd);
     }
 
-    public void initContactCreation() {
-        initContactModification(By.linkText("add new"));
+    public void initCreation() {
+        initModification(By.linkText("add new"));
     }
 
-    public void fillContactForm(ContactData contactData, boolean isCreation) {
+    public void fillForm(ContactData contactData, boolean isCreation) {
         type(By.name("firstname"), contactData.getName());
         type(By.name("lastname"), contactData.getLastName());
         type(By.name("company"), contactData.getCompany());
         type(By.name("mobile"), contactData.getMobilePhone());
-        type(By.name("email"), contactData.geteMail());
+        type(By.name("email"), contactData.getEmail());
 
         if(isCreation) {
             new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
@@ -35,47 +36,76 @@ public class ContactHelper extends HelperBase {
         }
     }
 
-    public void fillContactForm(ContactData contactData) {
+    public void fillForm(ContactData contactData) {
         type(By.name("firstname"), contactData.getName());
         type(By.name("lastname"), contactData.getLastName());
         type(By.name("company"), contactData.getCompany());
         type(By.name("mobile"), contactData.getMobilePhone());
-        type(By.name("email"), contactData.geteMail());
+        type(By.name("email"), contactData.getEmail());
     }
 
     public void submitUserCreation(By locator) {
         click(locator);
     }
 
-    public void initContactModification(By locator) {
+    public void pressSubmit(int number) {
+        click(By.xpath(String.format("//*[@name=\"submit\"][%d]", number)));
+    }
+
+    public void initModification(By locator) {
         click(locator);
     }
 
-    public void initContactModification(int index) {
-        List<WebElement> elements = wd.findElements(By.xpath("//*[@id=\"maintable\"]/tbody//td[8]"));
-        if (index >= 0 && index < elements.size()) {
-            elements.get(index).click();
-        } else if (index < 0){
-            elements.get(0).click();
-        } else {
-            elements.get(elements.size() - 1).click();
-        }
+    public void initModification(ContactData contact) {
+        wd.findElement(By.xpath(String.format("//a[contains(@href, 'edit.php?id=%d')]", contact.getId()))).click();
+    }
+
+    public void pressUpdateButton(int number) {
+        click(By.xpath(String.format("//*[@value=\"Update\"][%d]", number)));
+    }
+
+    public void create (ContactData contact, int buttonNumber) {
+        initCreation();
+        fillForm(contact);
+        pressSubmit(buttonNumber); //Submit button number in such buttons list
+    }
+
+    public void modify(ContactData contact, int buttonNumber) {
+        initModification(contact);
+        type(By.name("firstname"), contact.getName());
+        type(By.name("lastname"), contact.getLastName());
+        pressUpdateButton(buttonNumber);
     }
 
     public boolean isThereAcontact() {
-        return (isElementPresent(By.xpath("//tr[2]//input[@type=\"checkbox\"]")));
+        return (isElementPresent(By.xpath("//tr[@name=\"entry\"]")));
     }
 
-    public List<ContactData> getContactsList() {
+    public List<ContactData> list() {
         List<ContactData> contacts = new ArrayList<>();
         List<WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element : elements) {
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             String lastName = element.findElements(By.tagName("td")).get(1).getText();
             String firstName = element.findElements(By.tagName("td")).get(2).getText();
-            ContactData contact = new ContactData(id, firstName, lastName);
+            ContactData contact = new ContactData().withId(id).withName(firstName).withLastName(lastName);
             contacts.add(contact);
         }
         return contacts;
     }
+
+    public Set<ContactData> all() {
+        Set<ContactData> contacts = new HashSet<>();
+        List<WebElement> elements = wd.findElements(By.name("entry"));
+        for (WebElement element : elements) {
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
+            String lastName = element.findElements(By.tagName("td")).get(1).getText();
+            String firstName = element.findElements(By.tagName("td")).get(2).getText();
+            ContactData contact = new ContactData().withId(id).withName(firstName).withLastName(lastName);
+            contacts.add(contact);
+        }
+        return contacts;
+    }
+
+
 }

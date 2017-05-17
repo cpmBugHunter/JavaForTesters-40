@@ -2,7 +2,6 @@ package ru.pft40.bugHunter.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class NavigationHelper extends HelperBase {
 
@@ -20,7 +19,7 @@ public class NavigationHelper extends HelperBase {
         }
     }
 
-    public void goToHomePage() {
+    public void homePage() {
         if(isElementPresent((By.id("maintable")))) {
             return;
         } else {

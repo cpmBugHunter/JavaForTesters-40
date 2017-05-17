@@ -1,44 +1,50 @@
 package ru.pft40.bugHunter.model;
 
 public class GroupData {
-    private int id;
-    private final String groupName;
-    private final String groupHeader;
-    private final String groupFooter;
-
-    public GroupData(int id, String groupName, String groupHeader, String groupFooter) {
-        this.id = id;
-        this.groupName = groupName;
-        this.groupHeader = groupHeader;
-        this.groupFooter = groupFooter;
-    }
-
-    public GroupData(String groupName, String groupHeader, String groupFooter) {
-        this.id = Integer.MAX_VALUE;
-        this.groupName = groupName;
-        this.groupHeader = groupHeader;
-        this.groupFooter = groupFooter;
-
-    }
+    private int id = Integer.MAX_VALUE;
+    private String name;
+    private String header;
+    private String footer;
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public String getName() {
+        return name;
+    }
+
+    public String getHeader() {
+        return header;
+    }
+
+    public String getFooter() {
+        return footer;
+    }
+
+    public GroupData withId(int id) {
         this.id = id;
+        return  this;
     }
 
-    public String getGroupName() {
-        return groupName;
+    public GroupData withName(String groupName) {
+        this.name = groupName;
+        return  this;
     }
 
-    public String getGroupHeader() {
-        return groupHeader;
+    public GroupData withHeader(String groupHeader) {
+        this.header = groupHeader;
+        return  this;
     }
 
-    public String getGroupFooter() {
-        return groupFooter;
+    public GroupData withFooter(String groupFooter) {
+        this.footer = groupFooter;
+        return  this;
+    }
+
+    @Override
+    public String toString() {
+        return "GroupData{" + "id=" + id + ", name='" + name + '\'' + '}';
     }
 
     @Override
@@ -48,17 +54,15 @@ public class GroupData {
 
         GroupData groupData = (GroupData) o;
 
-        return groupName != null ? groupName.equals(groupData.groupName) : groupData.groupName == null;
+        if (id != groupData.id) return false;
+        return name != null ? name.equals(groupData.name) : groupData.name == null;
     }
 
     @Override
     public int hashCode() {
-        return groupName != null ? groupName.hashCode() : 0;
-    }
-
-    @Override
-    public String toString() {
-        return "GroupData{" + "id=" + id + ", groupName='" + groupName + '\'' + '}';
+        int result = id;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
     }
 
 }

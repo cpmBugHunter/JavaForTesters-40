@@ -7,48 +7,37 @@ import ru.pft40.bugHunter.model.ContactData;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
 
 public class ContactCreationTests extends TestBase {
 
     @Test
     public void testContactCreationByUpperEnterBtn() {
-        appMngr.goTo().goToHomePage();
-        List<ContactData> before = appMngr.getContactHelper().getContactsList();
-        appMngr.getContactHelper().initContactCreation();
-        ContactData contact = new ContactData("Max", "Ivanov", "Some Company LTD",
-                "+7(909)123-45-89", "madMax@mail.com");
-        appMngr.getContactHelper().fillContactForm(contact);
-        appMngr.getContactHelper().submitUserCreation(By.xpath("//*[@name=\"submit\"][1]")); //upper Enter btn
-        appMngr.goTo().goToHomePage(); //переход на главную для проверки создания контакта
-        List<ContactData> after = appMngr.getContactHelper().getContactsList();
+        appMngr.goTo().homePage();
+        Set<ContactData> before = appMngr.contact().all();
+        ContactData contact = new ContactData().withName("Max").withLastName("Ivanov");
+        appMngr.contact().create(contact, 1);
+        appMngr.goTo().homePage();
+        Set<ContactData> after = appMngr.contact().all();
         Assert.assertEquals(after.size(), before.size() + 1);
 
-
+        contact.withId(after.stream().mapToInt((c) -> contact.getId()).max().getAsInt());
         before.add(contact);
-        Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
-        before.sort(byId);
-        after.sort(byId);
         Assert.assertEquals(before, after);
     }
 
     @Test
     public void testContactCreationByLowerEnterBtn() {
-        appMngr.goTo().goToHomePage();
-        List<ContactData> before = appMngr.getContactHelper().getContactsList();
-        appMngr.getContactHelper().initContactCreation();
-        ContactData contact = new ContactData("Max", "Ivanov", "Some Company LTD",
-                "+7(909)123-45-89", "madMax@mail.com");
-        appMngr.getContactHelper().fillContactForm(contact);
-        appMngr.getContactHelper().submitUserCreation(By.xpath("//*[@name=\"submit\"][2]")); //lower Enter btn
-        appMngr.goTo().goToHomePage(); //переход на главную для проверки создания контакта
-        List<ContactData> after = appMngr.getContactHelper().getContactsList();
+        appMngr.goTo().homePage();
+        List<ContactData> before = appMngr.contact().list();
+        appMngr.contact().initCreation();
+        ContactData contact = new ContactData().withName("Max").withLastName("Ivanov").withCompany("Some Company LTD")
+                .withMobilePhone("+7(909)123-45-89").withEmail("madMax@mail.com");
+        appMngr.contact().fillForm(contact);
+        appMngr.contact().submitUserCreation(By.xpath("//*[@name=\"submit\"][2]")); //upper Enter btn
+        appMngr.goTo().homePage(); //переход на главную для проверки создания контакта
+        List<ContactData> after = appMngr.contact().list();
         Assert.assertEquals(after.size(), before.size() + 1);
-
-        before.add(contact);
-        Comparator<? super ContactData> byId = (c1, c2) -> Integer.compare(c1.getId(), c2.getId());
-        before.sort(byId);
-        after.sort(byId);
-        Assert.assertEquals(before, after);
     }
 
 }

@@ -12,12 +12,12 @@ public class ContactDeletionTests extends TestBase {
 
     @Test
     public void testContactDeletionViaModificationForm() {
-        precondition();
-        List<ContactData> before = appMngr.getContactHelper().getContactsList();
-        appMngr.getContactHelper().initContactModification(By.xpath("//tr[2]//a[contains (@href, 'edit')]"));
-        appMngr.getContactHelper().click(By.xpath("//input[@value=\"Delete\"]")); //delete button
-        appMngr.goTo().goToHomePage();
-        List<ContactData> after = appMngr.getContactHelper().getContactsList();
+
+        List<ContactData> before = appMngr.contact().list();
+        appMngr.contact().initModification(By.xpath("//tr[2]//a[contains (@href, 'edit')]"));
+        appMngr.contact().click(By.xpath("//input[@value=\"Delete\"]")); //delete button
+        appMngr.goTo().homePage();
+        List<ContactData> after = appMngr.contact().list();
         Assert.assertEquals(after.size(), before.size() - 1);
 
         before.remove(0);
@@ -26,25 +26,18 @@ public class ContactDeletionTests extends TestBase {
 
     @Test
     public void testContactDeletionOnHomePage() {
-        precondition();
-        List<ContactData> before = appMngr.getContactHelper().getContactsList();
-        appMngr.getContactHelper().click(By.xpath("//tr[2]//input[@type=\"checkbox\"]")); //first contact
-        appMngr.getContactHelper().click(By.xpath("//input[@value=\"Delete\"]")); //delete button
-        appMngr.getContactHelper().alertAccept();
-        appMngr.goTo().goToHomePage();
-        List<ContactData> after = appMngr.getContactHelper().getContactsList();
+
+        List<ContactData> before = appMngr.contact().list();
+        appMngr.contact().click(By.xpath("//tr[2]//input[@type=\"checkbox\"]")); //first contact
+        appMngr.contact().click(By.xpath("//input[@value=\"Delete\"]")); //delete button
+        appMngr.contact().alertAccept();
+        appMngr.goTo().homePage();
+        List<ContactData> after = appMngr.contact().list();
         Assert.assertEquals(after.size(), before.size() - 1);
 
         before.remove(0);
         Assert.assertEquals(before, after);
     }
 
-    private void precondition() {
-        appMngr.goTo().goToHomePage();
-        if (! appMngr.getContactHelper().isThereAcontact()) {
-            appMngr.getContactHelper().initContactCreation();
-            appMngr.getContactHelper().fillContactForm(new ContactData("Max", "Ivanov", "Some Company LTD",
-                    "+7(909)123-45-89", "madMax@mail.com", null), true);
-        }
-    }
+
 }
