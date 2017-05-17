@@ -8,7 +8,10 @@ import org.testng.Assert;
 import ru.pft40.bugHunter.model.ContactData;
 
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.HashSet;
+=======
+>>>>>>> 9c88fc6ecc86d41a384d9fe5598e75e1cfbc9e5c
 import java.util.List;
 import java.util.Set;
 
@@ -56,6 +59,7 @@ public class ContactHelper extends HelperBase {
         click(locator);
     }
 
+<<<<<<< HEAD
     public void initModification(ContactData contact) {
         wd.findElement(By.xpath(String.format("//a[contains(@href, 'edit.php?id=%d')]", contact.getId()))).click();
     }
@@ -79,6 +83,14 @@ public class ContactHelper extends HelperBase {
 
     public boolean isThereAcontact() {
         return (isElementPresent(By.xpath("//tr[@name=\"entry\"]")));
+=======
+    public void initContactModification(int index) {
+        wd.findElements(By.xpath("//img[@title=\"Edit\"]")).get(index).click();
+    }
+
+    public boolean isThereAcontact() {
+        return (isElementPresent(By.xpath("//input[@type=\"checkbox\"]")));
+>>>>>>> 9c88fc6ecc86d41a384d9fe5598e75e1cfbc9e5c
     }
 
     public List<ContactData> list() {

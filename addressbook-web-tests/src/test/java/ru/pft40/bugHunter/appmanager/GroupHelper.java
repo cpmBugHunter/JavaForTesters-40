@@ -44,10 +44,21 @@ public class GroupHelper extends HelperBase {
         wd.findElement(By.cssSelector("input[value='" + id +"']")).click();
     }
 
+<<<<<<< HEAD
     public void modify(GroupData group, int btn) { // btn may be 1 or 2 (upper or lower button)
         selectById(group.getId());
         initModification(btn); // Edit btn
         type(By.xpath("//*[@name=\"group_name\"]"), group.getName());
+=======
+    public void selectGroup(int index) {
+            wd.findElements(By.name("selected[]")).get(index).click();
+    }
+
+    public void modify(int index, GroupData group, int btn) { // btn may be 1 or 2 (upper or lower button)
+        selectGroup(index);
+        initGroupModification(btn); // Edit btn
+        type(By.xpath("//*[@name=\"group_name\"]"), group.getGroupName());
+>>>>>>> 9c88fc6ecc86d41a384d9fe5598e75e1cfbc9e5c
         click(By.xpath("//*[@value=\"Update\"]"));
         returnToGroupPage();
     }
@@ -74,8 +85,13 @@ public class GroupHelper extends HelperBase {
         returnToGroupPage();
     }
 
+<<<<<<< HEAD
     public Set<GroupData> all() {
         Set<GroupData> groups = new HashSet<>();
+=======
+    public List<GroupData> list() {
+        List<GroupData> groups = new ArrayList<>();
+>>>>>>> 9c88fc6ecc86d41a384d9fe5598e75e1cfbc9e5c
         List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
         for(WebElement element : elements) {
             String name = element.getText();
