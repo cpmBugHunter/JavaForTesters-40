@@ -36,9 +36,20 @@ public class GroupHelper extends HelperBase {
         click(By.xpath(xPath));
     }
 
+    public void create(GroupData group, int btn) {
+        initCreation(btn); //which button click on
+        fillForm(group);
+        submitCreation();
+        returnToGroupPage();
+    }
+
     public void deleteSelected(int btn) {
         String xPath = String.format("//*[@name=\"delete\"][%d]", btn); // may be 1 or 2 (upper or lower button)
         click(By.xpath(xPath));
+    }
+
+    public void selectGroup(int index) {
+        wd.findElements(By.name("selected[]")).get(index).click();
     }
 
     private void selectById(int id) {
@@ -50,11 +61,10 @@ public class GroupHelper extends HelperBase {
         selectById(group.getId());
         initModification(btn); // Edit btn
         type(By.xpath("//*[@name=\"group_name\"]"), group.getName());
+        click(By.xpath("//*[@value=\"Update\"]"));
+        returnToGroupPage();
     }
 
-    public void selectGroup(int index) {
-            wd.findElements(By.name("selected[]")).get(index).click();
-    }
 
     public void modify(int index, GroupData group, int btn) { // btn may be 1 or 2 (upper or lower button)
         selectGroup(index);
@@ -63,6 +73,7 @@ public class GroupHelper extends HelperBase {
         click(By.xpath("//*[@value=\"Update\"]"));
         returnToGroupPage();
     }
+
 
     public void delete(GroupData group, int btn) {
         selectById(group.getId());
@@ -77,13 +88,6 @@ public class GroupHelper extends HelperBase {
 
     public boolean isThereAgroup() {
         return isElementPresent(By.name("selected[]"));
-    }
-
-    public void create(GroupData group, int btn) {
-        initCreation(btn); //which button click on
-        fillForm(group);
-        submitCreation();
-        returnToGroupPage();
     }
 
 

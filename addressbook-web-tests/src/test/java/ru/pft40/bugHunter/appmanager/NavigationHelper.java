@@ -10,8 +10,8 @@ public class NavigationHelper extends HelperBase {
     }
 
     public void groupPage() {
-        if(isElementPresent(By.tagName("h1"))
-                && wd.findElement(By.tagName("h1")).getText().equals("Groups")
+        if(isElementPresent(By.xpath(".//*[@id=\"content\"]/h1"))
+                && wd.findElement(By.xpath(".//*[@id=\"content\"]/h1")).getText().equals("Groups")
                 && isElementPresent(By.name("new"))) {
             return;
         } else {
