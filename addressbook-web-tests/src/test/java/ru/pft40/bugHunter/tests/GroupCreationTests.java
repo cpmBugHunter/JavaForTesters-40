@@ -18,7 +18,7 @@ public class GroupCreationTests extends TestBase {
         Set<GroupData> after = appMngr.group().all();
         Assert.assertEquals(after.size(), before.size() + 1);
 
-        group.withId(after.stream().mapToInt((g) -> group.getId()).max().getAsInt());
+        group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
         before.add(group);
         Assert.assertEquals(before, after);
     }
@@ -33,7 +33,7 @@ public class GroupCreationTests extends TestBase {
         Set<GroupData> after = appMngr.group().all();
         Assert.assertEquals(after.size(), before.size() + 1);
 
-        group.withId(after.stream().mapToInt((g) -> group.getId()).max().getAsInt());
+        group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
         before.add(group);
         Assert.assertEquals(before, after);
     }

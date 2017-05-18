@@ -44,10 +44,6 @@ public class ContactHelper extends HelperBase {
         type(By.name("email"), contactData.getEmail());
     }
 
-    public void submitUserCreation(By locator) {
-        click(locator);
-    }
-
     public void pressSubmit(int number) {
         click(By.xpath(String.format("//*[@name=\"submit\"][%d]", number)));
     }
@@ -55,7 +51,6 @@ public class ContactHelper extends HelperBase {
     public void initModification(By locator) {
         click(locator);
     }
-
 
     public void initModification(ContactData contact) {
         wd.findElement(By.xpath(String.format("//a[contains(@href, 'edit.php?id=%d')]", contact.getId()))).click();
@@ -68,7 +63,7 @@ public class ContactHelper extends HelperBase {
     public void create (ContactData contact, int buttonNumber) {
         initCreation();
         fillForm(contact);
-        pressSubmit(buttonNumber); //Submit button number in such buttons list
+        pressSubmit(buttonNumber); //'Submit' button number in such buttons list
     }
 
     public void modify(ContactData contact, int buttonNumber) {
@@ -76,6 +71,15 @@ public class ContactHelper extends HelperBase {
         type(By.name("firstname"), contact.getName());
         type(By.name("lastname"), contact.getLastName());
         pressUpdateButton(buttonNumber);
+    }
+
+    public void delete(ContactData contactData) {
+        selectById(contactData.getId());
+        click(By.xpath("//input[@value=\"Delete\"]"));
+    }
+
+    private void selectById(int id) {
+        wd.findElement(By.cssSelector("input[value='" + id +"']")).click();
     }
 
     public boolean isThereAcontact() {

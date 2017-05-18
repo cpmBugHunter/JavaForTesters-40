@@ -5,7 +5,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.pft40.bugHunter.model.ContactData;
 
-import java.util.List;
+import java.util.Set;
 
 
 public class ContactDeletionTests extends TestBase {
@@ -13,29 +13,30 @@ public class ContactDeletionTests extends TestBase {
     @Test
     public void testContactDeletionViaModificationForm() {
 
-        List<ContactData> before = appMngr.contact().list();
-        appMngr.contact().initModification(By.xpath("//tr[2]//a[contains (@href, 'edit')]"));
+        Set<ContactData> before = appMngr.contact().all();
+        ContactData deletedContact = before.iterator().next();
+        appMngr.contact().initModification(deletedContact);
         appMngr.contact().click(By.xpath("//input[@value=\"Delete\"]")); //delete button
         appMngr.goTo().homePage();
-        List<ContactData> after = appMngr.contact().list();
+        Set<ContactData> after = appMngr.contact().all();
         Assert.assertEquals(after.size(), before.size() - 1);
 
-        before.remove(0);
+        before.remove(deletedContact);
         Assert.assertEquals(before, after);
     }
 
     @Test
     public void testContactDeletionOnHomePage() {
 
-        List<ContactData> before = appMngr.contact().list();
-        appMngr.contact().click(By.xpath("//tr[2]//input[@type=\"checkbox\"]")); //first contact
-        appMngr.contact().click(By.xpath("//input[@value=\"Delete\"]")); //delete button
+        Set<ContactData> before = appMngr.contact().all();
+        ContactData deletedContact = before.iterator().next();
+        appMngr.contact().delete(deletedContact);
         appMngr.contact().alertAccept();
         appMngr.goTo().homePage();
-        List<ContactData> after = appMngr.contact().list();
+        Set<ContactData> after = appMngr.contact().all();
         Assert.assertEquals(after.size(), before.size() - 1);
 
-        before.remove(0);
+        before.remove(deletedContact);
         Assert.assertEquals(before, after);
     }
 
