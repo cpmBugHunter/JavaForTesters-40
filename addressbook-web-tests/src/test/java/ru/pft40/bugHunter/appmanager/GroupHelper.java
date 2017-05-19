@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.pft40.bugHunter.model.GroupData;
+import ru.pft40.bugHunter.model.Groups;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -56,7 +57,6 @@ public class GroupHelper extends HelperBase {
         wd.findElement(By.cssSelector("input[value='" + id +"']")).click();
     }
 
-
     public void modify(GroupData group, int btn) { // btn may be 1 or 2 (upper or lower button)
         selectById(group.getId());
         initModification(btn); // Edit btn
@@ -65,7 +65,6 @@ public class GroupHelper extends HelperBase {
         returnToGroupPage();
     }
 
-
     public void modify(int index, GroupData group, int btn) { // btn may be 1 or 2 (upper or lower button)
         selectGroup(index);
         initModification(btn); // Edit btn
@@ -73,7 +72,6 @@ public class GroupHelper extends HelperBase {
         click(By.xpath("//*[@value=\"Update\"]"));
         returnToGroupPage();
     }
-
 
     public void delete(GroupData group, int btn) {
         selectById(group.getId());
@@ -90,20 +88,8 @@ public class GroupHelper extends HelperBase {
         return isElementPresent(By.name("selected[]"));
     }
 
-
-    public Set<GroupData> all() {
-        Set<GroupData> groups = new HashSet<>();
-        List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
-        for(WebElement element : elements) {
-            String name = element.getText();
-            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
-            groups.add(new GroupData().withId(id).withName(name));
-        }
-        return groups;
-    }
-
-    public List<GroupData> list() {
-        List<GroupData> groups = new ArrayList<>();
+    public Groups all() {
+        Groups groups = new Groups();
         List<WebElement> elements = wd.findElements(By.cssSelector("span.group"));
         for(WebElement element : elements) {
             String name = element.getText();

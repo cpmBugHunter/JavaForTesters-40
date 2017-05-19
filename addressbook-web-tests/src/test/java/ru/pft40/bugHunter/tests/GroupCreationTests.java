@@ -1,10 +1,16 @@
 package ru.pft40.bugHunter.tests;
 
+import org.hamcrest.CoreMatchers;
+import org.hamcrest.MatcherAssert;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import ru.pft40.bugHunter.model.GroupData;
+import ru.pft40.bugHunter.model.Groups;
 
 import java.util.Set;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.MatcherAssert.*;
 
 public class GroupCreationTests extends TestBase {
 
@@ -12,29 +18,27 @@ public class GroupCreationTests extends TestBase {
     public void testGroupCreationByUpperCreateBtn() {
 
         appMngr.goTo().groupPage();
-        Set<GroupData> before = appMngr.group().all();
+        Groups before = appMngr.group().all();
         GroupData group = new GroupData().withName("GroupName");
         appMngr.group().create(group, 1);
-        Set<GroupData> after = appMngr.group().all();
-        Assert.assertEquals(after.size(), before.size() + 1);
+        Groups after = appMngr.group().all();
+        assertThat(after.size(), equalTo(before.size() + 1));
 
-        group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
-        before.add(group);
-        Assert.assertEquals(before, after);
+        assertThat(after, equalTo(before
+                .withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
     }
 
     @Test
     public void testGroupCreationByLowerCreateBtn() {
 
         appMngr.goTo().groupPage();
-        Set<GroupData> before = appMngr.group().all();
+        Groups before = appMngr.group().all();
         GroupData group = new GroupData().withName("GroupName");
         appMngr.group().create(group, 2);
-        Set<GroupData> after = appMngr.group().all();
-        Assert.assertEquals(after.size(), before.size() + 1);
+        Groups after = appMngr.group().all();
+        assertThat(after.size(), equalTo(before.size() + 1));
 
-        group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt());
-        before.add(group);
-        Assert.assertEquals(before, after);
+        assertThat(after, equalTo(before
+                .withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
     }
 }
