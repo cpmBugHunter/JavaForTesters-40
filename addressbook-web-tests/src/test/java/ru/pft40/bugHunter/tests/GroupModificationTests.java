@@ -1,12 +1,9 @@
 package ru.pft40.bugHunter.tests;
 
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.pft40.bugHunter.model.GroupData;
 import ru.pft40.bugHunter.model.Groups;
-
-import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -27,8 +24,7 @@ public class GroupModificationTests extends TestBase {
     public void testGroupModificationByUpperUpdateBtn() {
         Groups before = appMngr.group().all();
         GroupData modifiedGroup = before.iterator().next();
-        GroupData group = new GroupData().withId(modifiedGroup.getId()).withName("ChangedGroupName")
-                .withHeader("Header").withFooter("Footer");
+        GroupData group = new GroupData().withId(modifiedGroup.getId()).withName("ChangedGroupName1");
         appMngr.group().modify(group, 1);
         Groups after = appMngr.group().all();
 
@@ -40,8 +36,7 @@ public class GroupModificationTests extends TestBase {
     public void testGroupModificationByLowerUpdateBtn() {
         Groups before = appMngr.group().all();
         GroupData modifiedGroup = before.iterator().next();
-        GroupData group = new GroupData().withId(modifiedGroup.getId()).withName("ChangedGroupName")
-                .withHeader("Header").withFooter("Footer");
+        GroupData group = new GroupData().withId(modifiedGroup.getId()).withName("ChangedGroupName2");
         appMngr.group().modify(group, 2);
         Groups after = appMngr.group().all();
 

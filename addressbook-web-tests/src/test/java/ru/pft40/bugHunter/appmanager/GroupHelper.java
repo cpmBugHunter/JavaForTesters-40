@@ -6,10 +6,7 @@ import org.openqa.selenium.WebElement;
 import ru.pft40.bugHunter.model.GroupData;
 import ru.pft40.bugHunter.model.Groups;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 public class GroupHelper extends HelperBase {

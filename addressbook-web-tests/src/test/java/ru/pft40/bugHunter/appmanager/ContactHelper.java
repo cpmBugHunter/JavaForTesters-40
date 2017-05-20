@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.pft40.bugHunter.model.ContactData;
+import ru.pft40.bugHunter.model.Contacts;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -99,8 +100,8 @@ public class ContactHelper extends HelperBase {
         return contacts;
     }
 
-    public Set<ContactData> all() {
-        Set<ContactData> contacts = new HashSet<>();
+    public Contacts all() {
+        Contacts contacts = new Contacts();
         List<WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element : elements) {
             int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
