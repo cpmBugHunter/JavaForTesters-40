@@ -1,5 +1,6 @@
 package ru.pft40.bugHunter.tests;
 
+import com.thoughtworks.xstream.XStream;
 import org.testng.annotations.Test;
 import ru.pft40.bugHunter.model.GroupData;
 import ru.pft40.bugHunter.model.Groups;

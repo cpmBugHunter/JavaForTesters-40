@@ -5,8 +5,13 @@ public class ContactData {
     private String name;
     private String lastName;
     private String company;
+    private String address;
+    private String homePhone;
+    private String workPhone;
     private String mobilePhone;
     private String eMail;
+    private String eMail2;
+    private String eMail3;
     private String group;
 
 
@@ -46,6 +51,33 @@ public class ContactData {
         return  this;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public ContactData withAddress(String address) {
+        this.address = address;
+        return  this;
+    }
+
+    public String getHomePhone() {
+        return homePhone;
+    }
+
+    public ContactData withHomePhone(String homePhone) {
+        this.homePhone = homePhone;
+        return  this;
+    }
+
+    public String getWorkPhone() {
+        return workPhone;
+    }
+
+    public ContactData withWorkPhone(String workPhone) {
+        this.workPhone = workPhone;
+        return  this;
+    }
+
     public String getMobilePhone() {
         return mobilePhone;
     }
@@ -63,13 +95,34 @@ public class ContactData {
         return  this;
     }
 
+    public String getEmail2() {
+        return eMail2;
+    }
+
+    public ContactData withEmail2(String email) {
+        this.eMail2 = email;
+        return  this;
+    }
+
+    public String getEmail3() {
+        return eMail3;
+    }
+
+    public ContactData withEmail3(String email) {
+        this.eMail3 = email;
+        return  this;
+    }
+
     public String getGroup() {
         return group;
     }
 
     @Override
     public String toString() {
-        return "ContactData{" + "id=" + id + ", name='" + name + '\'' + ", lastName='" + lastName + '\'' + '}';
+        return "ContactData{" + "id=" + id + ", name='" + name + '\'' + ", lastName='" + lastName + '\'' + ", address='"
+                + address + '\'' + ", homePhone='" + homePhone + '\'' + ", workPhone='"
+                + workPhone + '\'' + ", mobilePhone='" + mobilePhone + '\'' + ", eMail='" + eMail + '\'' + ", eMail2='"
+                + eMail2 + '\'' + ", eMail3='" + eMail3 + '\'' + '}';
     }
 
     @Override

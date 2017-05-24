@@ -18,6 +18,9 @@ dependencies{
     agent "org.aspectj:aspectjweaver:${aspectjVersion}"
     compile "ru.yandex.qatools.allure:allure-testng-adaptor:${allureVersion}"
     compile 'org.hamcrest:java-hamcrest:2.0.0.0'
+    // https://mvnrepository.com/artifact/com.thoughtworks.xstream/xstream
+    compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.9'
+
 }
 
 test.doFirst {

@@ -13,7 +13,9 @@ public class ContactCreationTests extends TestBase {
     public void testContactCreationByUpperEnterBtn() {
         appMngr.goTo().homePage();
         Contacts before = appMngr.contact().all();
-        ContactData contact = new ContactData().withName("Max").withLastName("Ivanov");
+        ContactData contact = new ContactData().withName("Max").withLastName("Ivanov").withAddress("address")
+                .withHomePhone("111").withMobilePhone("222").withWorkPhone("333").withEmail("email@mail.com")
+                .withEmail2("email2@mail.com").withEmail3("email3@mail.com");
         appMngr.contact().create(contact, 1);
         appMngr.goTo().homePage();
         Contacts after = appMngr.contact().all();
