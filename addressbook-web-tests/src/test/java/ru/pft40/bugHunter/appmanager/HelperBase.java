@@ -50,8 +50,4 @@ public class HelperBase {
             return false;
         }
     }
-
-    public String cleaned(String s) {
-        return s.replaceAll("\\s", "").replaceAll("[-()]", "");
-    }
 }
