@@ -3,6 +3,7 @@ package ru.pft40.bugHunter.model;
 public class ContactData {
     private int id = Integer.MAX_VALUE;
     private String name;
+    private String middleName;
     private String lastName;
     private String company;
     private String address;
@@ -10,7 +11,7 @@ public class ContactData {
     private String homePhone;
     private String workPhone;
     private String mobilePhone;
-    private String emails;
+    private String allEmails;
     private String eMail;
     private String eMail2;
     private String eMail3;
@@ -33,6 +34,15 @@ public class ContactData {
     public ContactData withName(String name) {
         this.name = name;
         return  this;
+    }
+
+    public ContactData withMiddleName(String middleName) {
+        this.middleName = middleName;
+        return  this;
+    }
+
+    public String getMiddleName() {
+        return middleName;
     }
 
     public String getLastName() {
@@ -97,12 +107,12 @@ public class ContactData {
         return  this;
     }
 
-    public String getEmails() {
-        return emails;
+    public String getAllEmails() {
+        return allEmails;
     }
 
     public ContactData withEmails(String emails) {
-        this.emails = emails;
+        this.allEmails = emails;
         return this;
     }
 

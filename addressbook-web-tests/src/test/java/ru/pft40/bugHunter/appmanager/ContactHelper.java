@@ -129,15 +129,28 @@ public class ContactHelper extends HelperBase {
         int id = contact.getId();
         String firstName = wd.findElement(By.name("firstname")).getAttribute("value");
         String lastName = wd.findElement(By.name("lastname")).getAttribute("value");
+        String middleName = wd.findElement(By.name("middlename")).getAttribute("value");
         String address = wd.findElement(By.name("address")).getAttribute("value");
         String homePhone = wd.findElement(By.name("home")).getAttribute("value");
         String mobilePhone = wd.findElement(By.name("mobile")).getAttribute("value");
         String workPhone = wd.findElement(By.name("work")).getAttribute("value");
-//        String email = wd.findElement(By.name("email")).getAttribute("value");
-//        String email2 = wd.findElement(By.name("email2")).getAttribute("value");
-//        String email3 = wd.findElement(By.name("email3")).getAttribute("value");
+        String email = wd.findElement(By.name("email")).getAttribute("value");
+        String email2 = wd.findElement(By.name("email2")).getAttribute("value");
+        String email3 = wd.findElement(By.name("email3")).getAttribute("value");
         wd.navigate().back();
-        return new ContactData().withId(id).withName(firstName).withLastName(lastName).withAddress(address)
-                .withHomePhone(homePhone).withMobilePhone(mobilePhone).withWorkPhone(workPhone);
+        return new ContactData().withId(id).withName(firstName).withMiddleName(middleName).withLastName(lastName)
+                .withAddress(address)
+                .withHomePhone(homePhone).withMobilePhone(mobilePhone).withWorkPhone(workPhone)
+                .withEmail(email).withEmail2(email2).withEmail3(email3);
+    }
+
+    public String contactDatafromDetailsForm(ContactData contact) {
+        viewContactDetails(contact);
+        String contactDetails = wd.findElement(By.id("content")).getText();
+        return contactDetails;
+    }
+
+    private void viewContactDetails(ContactData contact) {
+        wd.findElement(By.xpath(String.format("//a[contains(@href, 'view.php?id=%d')]", contact.getId()))).click();
     }
 }
