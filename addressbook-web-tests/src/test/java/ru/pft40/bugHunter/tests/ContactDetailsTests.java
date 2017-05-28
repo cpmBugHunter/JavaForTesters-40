@@ -47,6 +47,6 @@ public class ContactDetailsTests extends TestBase{
     }
 
     private static String cleanedPhones(String str) {
-        return str.replaceAll("[HMW]\\:\\ ", "").replaceAll("[\\n]{2}", "\n");
+        return str.replaceAll("[HMW]\\:\\ ", "").replaceAll("[\\n]{2,}", "\n");
     }
 }
