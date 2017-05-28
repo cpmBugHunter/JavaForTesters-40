@@ -1,22 +1,44 @@
 package ru.pft40.bugHunter.model;
 
+import com.google.gson.annotations.Expose;
+
+import java.io.File;
+
 public class ContactData {
     private int id = Integer.MAX_VALUE;
+    @Expose
     private String name;
     private String middleName;
+    @Expose
     private String lastName;
     private String company;
+    @Expose
     private String address;
     private String allPhones;
+    @Expose
     private String homePhone;
+    @Expose
     private String workPhone;
+    @Expose
     private String mobilePhone;
     private String allEmails;
+    @Expose
     private String eMail;
+    @Expose
     private String eMail2;
+    @Expose
     private String eMail3;
     private String group;
+    private File photo;
 
+    public File getPhoto() {
+        return photo;
+    }
+
+    public ContactData withPhoto(File photo) {
+        this.photo = photo;
+        return  this;
+    }
 
     public int getId() {
         return id;

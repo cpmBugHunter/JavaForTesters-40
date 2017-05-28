@@ -10,7 +10,7 @@ import ru.pft40.bugHunter.appmanager.ApplicationManager;
 
 public class TestBase {
 
-    protected static final ApplicationManager appMngr = new ApplicationManager(BrowserType.FIREFOX);
+    protected static final ApplicationManager appMngr = new ApplicationManager(BrowserType.CHROME);
 
 
     @BeforeSuite

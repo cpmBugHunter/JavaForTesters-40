@@ -4,6 +4,8 @@ import org.testng.annotations.Test;
 import ru.pft40.bugHunter.model.ContactData;
 import ru.pft40.bugHunter.model.Contacts;
 
+import java.io.File;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -26,10 +28,11 @@ public class ContactCreationTests extends TestBase {
     }
 
     @Test
-    public void testContactCreationByLowerEnterBtn() {
+    public void testContactCreationWithPhotoAttach() {
         appMngr.goTo().homePage();
         Contacts before = appMngr.contact().all();
-        ContactData contact = new ContactData().withName("Max").withLastName("Ivanov");
+        File photo = new File("src/test/resources/photo.jpg");
+        ContactData contact = new ContactData().withName("Max").withLastName("Ivanov").withPhoto(photo);
         appMngr.contact().create(contact, 2);
         appMngr.goTo().homePage();
         Contacts after = appMngr.contact().all();
