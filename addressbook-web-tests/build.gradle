@@ -21,18 +21,42 @@ dependencies{
     compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.9'
     compile 'com.beust:jcommander:1.69'
     compile 'com.google.code.gson:gson:2.8.0'
+    compile 'ch.qos.logback:logback-classic:1.2.2'
+    //compile 'org.slf4j:slf4j-simple:1.7.25'
 }
 
 test.doFirst {
     jvmArgs "-javaagent:${configurations.agent.singleFile}"
 }
 
-test {
+task testGroups (type: Test) {
     useTestNG() {
-        //suites 'src/test/resources/testng.xml'
+        suites 'src/test/resources/testng-groups.xml'
     }
 
-    systemProperty 'allure.results.directory', 'build/allure-results'
+    if (project.hasProperty('browser')) {
+        systemProperty 'browser', "${browser}"
+    }
+    if (project.hasProperty('target')) {
+        systemProperty 'target', "${target}"
+    }
+    systemProperty 'allure.results.directory', 'build/group/allure-results'
+    systemProperty 'allure.link.issue.pattern', 'https://github.com/allure-framework/allure-docs/issues/{}'
+    systemProperty 'allure.link.tms.pattern', 'https://github.com/allure-framework/allure-docs/issues/{}'
+}
+
+task testContacts (type: Test) {
+    useTestNG() {
+        suites 'src/test/resources/testng-contacts.xml'
+    }
+
+    if (project.hasProperty('browser')) {
+        systemProperty 'browser', "${browser}"
+    }
+    if (project.hasProperty('target')) {
+        systemProperty 'target', "${target}"
+    }
+    systemProperty 'allure.results.directory', 'build/contact/allure-results'
     systemProperty 'allure.link.issue.pattern', 'https://github.com/allure-framework/allure-docs/issues/{}'
     systemProperty 'allure.link.tms.pattern', 'https://github.com/allure-framework/allure-docs/issues/{}'
 }

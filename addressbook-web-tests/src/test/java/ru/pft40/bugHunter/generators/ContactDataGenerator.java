@@ -54,18 +54,18 @@ public class ContactDataGenerator {
     private void saveAsJson(List<ContactData> contacts, File file) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
         String json = gson.toJson(contacts);
-        Writer writer = new FileWriter(file);
-        writer.write(json);
-        writer.close();
+        try (Writer writer = new FileWriter(file)) {
+            writer.write(json);
+        }
     }
 
     private void saveAsXml(List<ContactData> contacts, File file) throws IOException {
         XStream xStream = new XStream();
         xStream.processAnnotations(ContactData.class);
         String xml = xStream.toXML(contacts);
-        Writer writer = new FileWriter(file);
-        writer.write(xml);
-        writer.close();
+        try (Writer writer = new FileWriter(file)) {
+            writer.write(xml);
+        }
     }
 
     private List<ContactData> generateContacts(int count) {
@@ -86,6 +86,6 @@ public class ContactDataGenerator {
 
     private String generatePhone(int i) {
         SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy-HHmmssSS-");
-        return String.format(formatter.format(new Date()) + i);
+        return new StringBuilder().append(formatter.format(new Date())).append(i).toString();
     }
 }
