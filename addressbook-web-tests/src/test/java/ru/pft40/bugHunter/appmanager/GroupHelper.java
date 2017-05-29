@@ -52,7 +52,7 @@ public class GroupHelper extends HelperBase {
     }
 
     private void selectById(int id) {
-        wd.findElement(By.cssSelector("input[value='" + id +"']")).click();
+        wd.findElement(By.cssSelector(String.format("input[value='%s']", id))).click();
     }
 
     public void modify(GroupData group, int btn) { // btn may be 1 or 2 (upper or lower button)

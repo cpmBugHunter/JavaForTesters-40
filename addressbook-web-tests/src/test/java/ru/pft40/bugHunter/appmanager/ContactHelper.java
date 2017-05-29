@@ -13,6 +13,7 @@ import java.util.List;
 
 
 public class ContactHelper extends HelperBase {
+
     public ContactHelper(WebDriver wd) {
         super(wd);
     }
@@ -87,7 +88,7 @@ public class ContactHelper extends HelperBase {
     }
 
     private void selectById(int id) {
-        wd.findElement(By.cssSelector("input[value='" + id +"']")).click();
+        wd.findElement(By.cssSelector(String.format("input[value='%s']", id))).click();
     }
 
     public boolean isThereAcontact() {

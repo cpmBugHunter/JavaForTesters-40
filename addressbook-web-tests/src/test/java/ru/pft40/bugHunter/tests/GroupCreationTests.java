@@ -40,15 +40,15 @@ public class GroupCreationTests extends TestBase {
     @DataProvider
     public Iterator<Object[]> validGroupsXml() throws IOException {
         try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/groups.xml")))) {
-            String xml = "";
+            StringBuilder xml = new StringBuilder();
             String line = reader.readLine();
             while (line != null) {
-                xml += line;
+                xml.append(line);
                 line = reader.readLine();
             }
             XStream xStream = new XStream();
             xStream.processAnnotations(GroupData.class);
-            List<GroupData> groups = (List<GroupData>)xStream.fromXML(xml);
+            List<GroupData> groups = (List<GroupData>)xStream.fromXML(xml.toString());
             return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
         }
     }
@@ -81,11 +81,10 @@ public class GroupCreationTests extends TestBase {
     }
 
     @Test(enabled = false)
-    public void testGroupCreationByLowerCreateBtn() {
+    public void testGroupCreationByLowerCreateBtn(GroupData group) {
 
         appMngr.goTo().groupPage();
         Groups before = appMngr.group().all();
-        GroupData group = new GroupData().withName("GroupName");
         appMngr.group().create(group, 2);
         assertThat(appMngr.group().count(), equalTo(before.size() + 1));
         Groups after = appMngr.group().all();
@@ -94,11 +93,10 @@ public class GroupCreationTests extends TestBase {
     }
 
     @Test(enabled = false)
-    public void testBadGroupCreation() {
+    public void testBadGroupCreation(GroupData group) {
 
         appMngr.goTo().groupPage();
         Groups before = appMngr.group().all();
-        GroupData group = new GroupData().withName("GroupName'");
         appMngr.group().create(group, 1);
         assertThat(appMngr.group().count(), equalTo(before.size()));
         Groups after = appMngr.group().all();
