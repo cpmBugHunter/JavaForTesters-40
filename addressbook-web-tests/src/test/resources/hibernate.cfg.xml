@@ -37,6 +37,7 @@
 
         <!-- Names the annotated entity class -->
         <mapping class="ru.pft40.bugHunter.model.GroupData"/>
+        <mapping class="ru.pft40.bugHunter.model.ContactData"/>
 
     </session-factory>
 

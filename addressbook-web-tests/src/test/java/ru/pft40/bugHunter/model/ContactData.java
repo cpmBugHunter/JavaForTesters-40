@@ -1,42 +1,71 @@
 package ru.pft40.bugHunter.model;
 
 import com.google.gson.annotations.Expose;
+import org.hibernate.annotations.Type;
 
+import javax.persistence.*;
 import java.io.File;
 
+@Entity
+@Table(name = "addressbook")
 public class ContactData {
+    @Id
+    @Column(name = "id")
     private int id = Integer.MAX_VALUE;
     @Expose
+    @Column(name = "firstname")
     private String name;
+    @Column(name = "middlename")
     private String middleName;
     @Expose
+    @Column(name = "lastname")
     private String lastName;
+    @Transient
     private String company;
     @Expose
+    @Column(name = "address")
+    @Type(type = "text")
     private String address;
+    @Transient
     private String allPhones;
     @Expose
+    @Column(name = "home")
+    @Type(type = "text")
     private String homePhone;
     @Expose
+    @Column(name = "work")
+    @Type(type = "text")
     private String workPhone;
     @Expose
+    @Column(name = "mobile")
+    @Type(type = "text")
     private String mobilePhone;
+    @Transient
     private String allEmails;
     @Expose
+    @Column(name = "email")
+    @Type(type = "text")
     private String eMail;
     @Expose
+    @Column(name = "email2")
+    @Type(type = "text")
     private String eMail2;
     @Expose
+    @Column(name = "email3")
+    @Type(type = "text")
     private String eMail3;
+    @Transient
     private String group;
-    private File photo;
+    @Column(name = "photo")
+    @Type(type = "text")
+    private String photo;
 
     public File getPhoto() {
-        return photo;
+        return (new File(photo));
     }
 
     public ContactData withPhoto(File photo) {
-        this.photo = photo;
+        this.photo = photo.getPath();
         return  this;
     }
 
