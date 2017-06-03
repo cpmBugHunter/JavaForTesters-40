@@ -1,31 +1,19 @@
 apply plugin: 'java'
 defaultTasks 'clean', 'test'
-task generateAllureReport(type: Exec) {
-    commandLine "allure", "generate allure-results"
-}
+
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
 
 repositories{
     mavenCentral()
 }
-configurations {
-    agent
-}
+
 dependencies{
     compile 'org.testng:testng:6.11'
     compile 'org.seleniumhq.selenium:selenium-java:2.53.1'
-    agent "org.aspectj:aspectjweaver:${aspectjVersion}"
-    compile "ru.yandex.qatools.allure:allure-testng-adaptor:${allureVersion}"
     compile 'org.hamcrest:java-hamcrest:2.0.0.0'
     compile 'commons-net:commons-net:3.6'
-
 }
-
-test.doFirst {
-    jvmArgs "-javaagent:${configurations.agent.singleFile}"
-}
-
 
 test {
     useTestNG() {
@@ -38,7 +26,4 @@ test {
     if (project.hasProperty('target')) {
         systemProperty 'target', "${target}"
     }
-    systemProperty 'allure.results.directory', 'build/contact/allure-results'
-    systemProperty 'allure.link.issue.pattern', 'https://github.com/allure-framework/allure-docs/issues/{}'
-    systemProperty 'allure.link.tms.pattern', 'https://github.com/allure-framework/allure-docs/issues/{}'
 }
