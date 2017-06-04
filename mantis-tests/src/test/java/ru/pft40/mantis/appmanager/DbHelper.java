@@ -1,14 +1,12 @@
-package ru.pft40.bugHunter.appmanager;
+package ru.pft40.mantis.appmanager;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import ru.pft40.bugHunter.model.ContactData;
-import ru.pft40.bugHunter.model.Contacts;
-import ru.pft40.bugHunter.model.GroupData;
-import ru.pft40.bugHunter.model.Groups;
+import ru.pft40.mantis.model.AccountData;
+import ru.pft40.mantis.model.Accounts;
 
 import java.util.List;
 
@@ -24,21 +22,12 @@ public class DbHelper {
         sessionFactory = new MetadataSources( registry ).buildMetadata().buildSessionFactory();
     }
 
-    public Groups groups() {
+    public Accounts accounts() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        List<GroupData> result = session.createQuery( "from GroupData" ).list();
+        List<AccountData> result = session.createQuery( "from mantis_user_table" ).list();
         session.getTransaction().commit();
         session.close();
-        return new Groups(result);
-    }
-
-    public Contacts contacts() {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        List<ContactData> result = session.createQuery( "from ContactData where deprecated = '0000-00-00'" ).list();
-        session.getTransaction().commit();
-        session.close();
-        return new Contacts(result);
+        return new Accounts(result);
     }
 }

@@ -70,10 +70,6 @@ public class ApplicationManager {
         return navigationHelper;
     }
 
-    public SessionHelper getSessionHelper() {
-        return sessionHelper;
-    }
-
     public ContactHelper contact() {
         return contactHelper;
     }

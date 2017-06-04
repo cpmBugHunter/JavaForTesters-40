@@ -50,6 +50,18 @@ public class ContactHelper extends HelperBase {
         type(By.name("email"), contactData.getEmail());
         type(By.name("email2"), contactData.getEmail2());
         type(By.name("email3"), contactData.getEmail3());
+    }
+
+    public void fillFormWithAttach(ContactData contactData) {
+        type(By.name("firstname"), contactData.getName());
+        type(By.name("lastname"), contactData.getLastName());
+        type(By.name("address"), contactData.getAddress());
+        type(By.name("home"), contactData.getHomePhone());
+        type(By.name("mobile"), contactData.getMobilePhone());
+        type(By.name("work"), contactData.getWorkPhone());
+        type(By.name("email"), contactData.getEmail());
+        type(By.name("email2"), contactData.getEmail2());
+        type(By.name("email3"), contactData.getEmail3());
         attach(By.name("photo"), contactData.getPhoto());
     }
 
@@ -154,5 +166,11 @@ public class ContactHelper extends HelperBase {
 
     private void viewContactDetails(ContactData contact) {
         wd.findElement(By.xpath(String.format("//a[contains(@href, 'view.php?id=%d')]", contact.getId()))).click();
+    }
+
+    public void createWithAttach(ContactData contact, int buttonNumber) {
+        initCreation();
+        fillFormWithAttach(contact);
+        pressSubmit(buttonNumber); //'Submit' button number in such buttons list
     }
 }

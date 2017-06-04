@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.testng.Assert.assertTrue;
 
-public class RegistrationTests extends TestBase {
+public class ChangePasswordTests extends TestBase {
 
     @BeforeMethod
     public void startMailServer() {
@@ -20,13 +20,10 @@ public class RegistrationTests extends TestBase {
     }
 
     @Test
-    public void testRegisterNewUser() throws IOException, MessagingException {
+    public void testMantisSendConfirmationLink() throws IOException, MessagingException {
 
-        long now = System.currentTimeMillis();
-        String user = String.format("user%s", now);
-        String password = "password";
-        String email = String.format("user%s@localhost.localhostdomain", now);
-        appMngr.registration().start(user, email);
+
+
         List<MailMessage> mailMessages = appMngr.mail().waitForMail(2, 10000);
         String confirmationLink = findConfirmationLink(mailMessages, email);
         appMngr.registration().finish(confirmationLink, password);

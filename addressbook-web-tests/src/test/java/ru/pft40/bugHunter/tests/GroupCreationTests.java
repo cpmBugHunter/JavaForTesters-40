@@ -68,8 +68,8 @@ public class GroupCreationTests extends TestBase {
         }
     }
 
-    @Test(dataProvider = "validGroupsJson")
-    public void testGroupCreationByUpperCreateBtn(GroupData group) {
+    @Test(dataProvider = "validGroupsJson", enabled = false)
+    public void testGroupCreation_GetGroupListFromUI(GroupData group) {
 
         appMngr.goTo().groupPage();
         Groups before = appMngr.group().all();
@@ -80,14 +80,14 @@ public class GroupCreationTests extends TestBase {
                 .withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
     }
 
-    @Test(enabled = false)
-    public void testGroupCreationByLowerCreateBtn(GroupData group) {
+    @Test(dataProvider = "validGroupsJson")
+    public void testGroupCreation_GetGroupListFromDB(GroupData group) {
 
         appMngr.goTo().groupPage();
-        Groups before = appMngr.group().all();
+        Groups before = appMngr.db().groups();
         appMngr.group().create(group, 2);
         assertThat(appMngr.group().count(), equalTo(before.size() + 1));
-        Groups after = appMngr.group().all();
+        Groups after = appMngr.db().groups();
         assertThat(after, equalTo(before
                 .withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
     }

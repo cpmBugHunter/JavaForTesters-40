@@ -36,12 +36,12 @@ public class ContactCreationTests extends TestBase {
     }
 
     @Test(dataProvider = "validContactsJson")
-    public void testContactCreationByUpperEnterBtn(ContactData contact) {
+    public void testContactCreation_GetContactsListfromDB(ContactData contact) {
         appMngr.goTo().homePage();
-        Contacts before = appMngr.contact().all();
+        Contacts before = appMngr.db().contacts();
         appMngr.contact().create(contact, 1);
         appMngr.goTo().homePage();
-        Contacts after = appMngr.contact().all();
+        Contacts after = appMngr.db().contacts();
 
         assertThat(after.size(), equalTo(before.size() + 1));
         assertThat(after, equalTo(before
@@ -54,7 +54,7 @@ public class ContactCreationTests extends TestBase {
         Contacts before = appMngr.contact().all();
         File photo = new File("src/test/resources/photo.jpg");
         ContactData contact = new ContactData().withName("Max").withLastName("Ivanov").withPhoto(photo);
-        appMngr.contact().create(contact, 2);
+        appMngr.contact().createWithAttach(contact, 2);
         appMngr.goTo().homePage();
         Contacts after = appMngr.contact().all();
 

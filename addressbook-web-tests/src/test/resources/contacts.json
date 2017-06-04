@@ -9,16 +9,5 @@
     "eMail": "email@mail-0.com",
     "eMail2": "email2@mail-0.com",
     "eMail3": "email3@mail-0.com"
-  },
-  {
-    "name": "Name1",
-    "lastName": "LastName1",
-    "address": "Address1",
-    "homePhone": "28052017-230326620-1",
-    "workPhone": "28052017-230326620-1",
-    "mobilePhone": "28052017-230326620-1",
-    "eMail": "email@mail-1.com",
-    "eMail2": "email2@mail-1.com",
-    "eMail3": "email3@mail-1.com"
   }
 ]
