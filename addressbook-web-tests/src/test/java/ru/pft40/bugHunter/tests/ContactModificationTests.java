@@ -11,36 +11,32 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactModificationTests extends TestBase {
 
+
     @BeforeMethod
-    private void ensurePrecondition() {
-        appMngr.goTo().homePage();
-        ContactData contactData = new ContactData()
-                .withName("Max")
-                .withLastName("Ivanov")
-                .withMobilePhone("+7(909)123-45-89")
-                .withEmail("chupakabra@mail.com");
-        if (! appMngr.contact().isThereAcontact()) {
-            appMngr.contact().create(contactData, 1); //upper Enter btn
+    public void ensurePreconditions() {
+        if (appMngr.db().contacts().size() == 0) {
+            appMngr.goTo().homePage();
+            appMngr.contact().create(new ContactData().withName("Max").withLastName("Ivanov"), 1);
         }
         appMngr.goTo().homePage();
     }
 
     @Test
-    public void testContactModificationByUpperUpdateBtn() {
-        Contacts before = appMngr.contact().all();
+    public void testContactModification_GetContactsListFromDB() {
+        Contacts before = appMngr.db().contacts();
         ContactData modifiedContact = before.iterator().next();
         ContactData contact = new ContactData()
                 .withId(modifiedContact.getId()).withName("Oleg").withLastName("Petrov");
         appMngr.contact().modify(contact, 1);
         appMngr.goTo().homePage();
-        Contacts after = appMngr.contact().all();
+        Contacts after = appMngr.db().contacts();
 
         assertThat(after.size(), equalTo(before.size()));
         assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
     }
 
-    @Test
-    public void testContactModificationByLowerUpdateBtn() {
+    @Test(enabled = false)
+    public void testContactModification_GetContactsListFromUI() {
         Contacts before = appMngr.contact().all();
         ContactData modifiedContact = before.iterator().next();
         ContactData contact = new ContactData()

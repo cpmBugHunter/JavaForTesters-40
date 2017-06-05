@@ -11,6 +11,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class ContactPhoneTests extends TestBase {
 
+    //Загрузка списка контактов из БД реализована в тесте ContactDetailTest (где проверяется всё полностью)
     @Test
     public void testContactPhonesComparison() {
         appMngr.goTo().homePage();

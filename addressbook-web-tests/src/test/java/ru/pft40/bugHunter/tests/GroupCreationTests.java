@@ -68,18 +68,6 @@ public class GroupCreationTests extends TestBase {
         }
     }
 
-    @Test(dataProvider = "validGroupsJson", enabled = false)
-    public void testGroupCreation_GetGroupListFromUI(GroupData group) {
-
-        appMngr.goTo().groupPage();
-        Groups before = appMngr.group().all();
-        appMngr.group().create(group, 1);
-        assertThat(appMngr.group().count(), equalTo(before.size() + 1));
-        Groups after = appMngr.group().all();
-        assertThat(after, equalTo(before
-                .withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
-    }
-
     @Test(dataProvider = "validGroupsJson")
     public void testGroupCreation_GetGroupListFromDB(GroupData group) {
 
@@ -88,6 +76,18 @@ public class GroupCreationTests extends TestBase {
         appMngr.group().create(group, 2);
         assertThat(appMngr.group().count(), equalTo(before.size() + 1));
         Groups after = appMngr.db().groups();
+        assertThat(after, equalTo(before
+                .withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+    }
+
+    @Test(dataProvider = "validGroupsJson", enabled = false)
+    public void testGroupCreation_GetGroupListFromUI(GroupData group) {
+
+        appMngr.goTo().groupPage();
+        Groups before = appMngr.group().all();
+        appMngr.group().create(group, 1);
+        assertThat(appMngr.group().count(), equalTo(before.size() + 1));
+        Groups after = appMngr.group().all();
         assertThat(after, equalTo(before
                 .withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
     }
