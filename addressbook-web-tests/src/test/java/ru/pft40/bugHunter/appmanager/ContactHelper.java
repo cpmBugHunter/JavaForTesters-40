@@ -89,8 +89,7 @@ public class ContactHelper extends HelperBase {
 
     public void modify(ContactData contact, int buttonNumber) {
         initModification(contact);
-        type(By.name("firstname"), contact.getName());
-        type(By.name("lastname"), contact.getLastName());
+        fillForm(contact);
         pressUpdateButton(buttonNumber);
     }
 

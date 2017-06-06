@@ -84,8 +84,8 @@ public class ContactDataGenerator {
         return contacts;
     }
 
-    private String generatePhone(int i) {
-        SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy-HHmmssSS-");
+    public static String generatePhone(int i) {
+        SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyy-HHmmssSSS-");
         return new StringBuilder().append(formatter.format(new Date())).append(i).toString();
     }
 }

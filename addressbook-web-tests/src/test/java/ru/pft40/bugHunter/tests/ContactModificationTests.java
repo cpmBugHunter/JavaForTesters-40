@@ -2,6 +2,7 @@ package ru.pft40.bugHunter.tests;
 
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import ru.pft40.bugHunter.generators.ContactDataGenerator;
 import ru.pft40.bugHunter.model.ContactData;
 import ru.pft40.bugHunter.model.Contacts;
 
@@ -26,13 +27,21 @@ public class ContactModificationTests extends TestBase {
         Contacts before = appMngr.db().contacts();
         ContactData modifiedContact = before.iterator().next();
         ContactData contact = new ContactData()
-                .withId(modifiedContact.getId()).withName("Oleg").withLastName("Petrov");
+                .withId(modifiedContact.getId()).withName(String.format("Name%s", System.currentTimeMillis()))
+                .withLastName(String.format("LastName%s", System.currentTimeMillis()))
+                .withAddress(modifiedContact.getAddress())
+                .withEmail(modifiedContact.getEmail()).withEmail2(modifiedContact.getEmail2())
+                .withEmail3(modifiedContact.getEmail3())
+                .withHomePhone(modifiedContact.getHomePhone())
+                .withMobilePhone(ContactDataGenerator.generatePhone(modifiedContact.getId()))
+                .withWorkPhone(modifiedContact.getWorkPhone());
         appMngr.contact().modify(contact, 1);
         appMngr.goTo().homePage();
         Contacts after = appMngr.db().contacts();
 
-        assertThat(after.size(), equalTo(before.size()));
+        //assertThat(after.size(), equalTo(before.size()));
         assertThat(after, equalTo(before.without(modifiedContact).withAdded(contact)));
+        verifyContactListInUI();
     }
 
     @Test(enabled = false)
