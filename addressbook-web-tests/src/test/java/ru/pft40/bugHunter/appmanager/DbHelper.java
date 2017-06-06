@@ -24,6 +24,14 @@ public class DbHelper {
         sessionFactory = new MetadataSources( registry ).buildMetadata().buildSessionFactory();
     }
 
+    public GroupData getGroup(int id) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        GroupData group = (GroupData) session.createQuery(String.format("from GroupData where id = %s", id))
+                .getSingleResult();
+        return group;
+    }
+
     public Groups groups() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
