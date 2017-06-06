@@ -58,16 +58,7 @@ public class GroupHelper extends HelperBase {
     public void modify(GroupData group, int btn) { // btn may be 1 or 2 (upper or lower button)
         selectById(group.getId());
         initModification(btn); // Edit btn
-        type(By.xpath("//*[@name=\"group_name\"]"), group.getName());
-        click(By.xpath("//*[@value=\"Update\"]"));
-        groupCache = null;
-        returnToGroupPage();
-    }
-
-    public void modify(int index, GroupData group, int btn) { // btn may be 1 or 2 (upper or lower button)
-        selectGroup(index);
-        initModification(btn); // Edit btn
-        type(By.xpath("//*[@name=\"group_name\"]"), group.getName());
+        fillForm(group);
         click(By.xpath("//*[@value=\"Update\"]"));
         returnToGroupPage();
     }
