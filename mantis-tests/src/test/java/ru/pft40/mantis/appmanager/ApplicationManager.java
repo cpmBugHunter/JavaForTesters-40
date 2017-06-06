@@ -32,8 +32,10 @@ public class ApplicationManager {
         try (FileReader fr = new FileReader(new File (String.format("src/test/resources/%s.properties", target))))
         {
             properties.load(fr);
+            dbHelper = new DbHelper();
         }
     }
+
 
     public void stop() {
         if (wd != null) {
@@ -71,9 +73,6 @@ public class ApplicationManager {
     }
     
     public DbHelper db() {
-        if (dbHelper == null) {
-            dbHelper = new DbHelper(this);
-        }
         return dbHelper;
     }
 
