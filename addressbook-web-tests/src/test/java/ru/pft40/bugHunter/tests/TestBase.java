@@ -85,7 +85,7 @@ public class TestBase {
     }
 
     private static String cleaned(String phone) {
-        return phone.replaceAll("\\s", "").replaceAll("[-()]", "");
+        return phone.replaceAll("[\\s-()]*", "");
     }
 
 }

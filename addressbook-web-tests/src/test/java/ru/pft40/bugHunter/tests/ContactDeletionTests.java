@@ -33,6 +33,7 @@ public class ContactDeletionTests extends TestBase {
 
         assertThat(after.size(), equalTo(before.size() - 1));
         assertThat(after, equalTo(before.without(deletedContact)));
+        verifyContactListInUI();
     }
 
     @Test
@@ -47,6 +48,7 @@ public class ContactDeletionTests extends TestBase {
 
         assertThat(after.size(), equalTo(before.size() - 1));
         assertThat(after, equalTo(before.without(deletedContact)));
+        verifyContactListInUI();
     }
 
     @Test(enabled = false)

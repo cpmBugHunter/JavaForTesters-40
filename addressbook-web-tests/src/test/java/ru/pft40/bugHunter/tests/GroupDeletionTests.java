@@ -18,7 +18,6 @@ public class GroupDeletionTests extends TestBase{
             appMngr.group().create(new GroupData().withName("GroupName").withHeader("Group Header")
                     .withFooter("GroupFooter"), 1);
         }
-
     }
 
     @Test
@@ -30,6 +29,7 @@ public class GroupDeletionTests extends TestBase{
         assertThat(appMngr.group().count(), equalTo(before.size() - 1));
         Groups after = appMngr.db().groups();
         assertThat(after, equalTo(before.without(deletedGroup)));
+        verifyGroupListInUI();
     }
 
     @Test(enabled = false)

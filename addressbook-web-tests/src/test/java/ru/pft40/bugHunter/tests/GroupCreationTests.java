@@ -21,8 +21,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupCreationTests extends TestBase {
 
-    Logger logger = LoggerFactory.getLogger(GroupCreationTests.class);
-
     @DataProvider
     public Iterator<Object[]> validGroupsCsv() throws IOException {
         List<Object[]> list = new ArrayList<>();
@@ -78,6 +76,7 @@ public class GroupCreationTests extends TestBase {
         Groups after = appMngr.db().groups();
         assertThat(after, equalTo(before
                 .withAdded(group.withId(after.stream().mapToInt((g) -> g.getId()).max().getAsInt()))));
+        verifyGroupListInUI();
     }
 
     @Test(dataProvider = "validGroupsJson", enabled = false)
