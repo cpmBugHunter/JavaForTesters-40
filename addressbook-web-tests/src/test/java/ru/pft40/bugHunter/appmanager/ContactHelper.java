@@ -34,7 +34,11 @@ public class ContactHelper extends HelperBase {
         type(By.name("email3"), contactData.getEmail3());
 
         if(isCreation) {
-            new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroup());
+            if (contactData.getGroups().size() > 0) {
+                Assert.assertTrue(contactData.getGroups().size() == 1);
+                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups()
+                        .iterator().next().getName());
+            }
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
@@ -52,7 +56,7 @@ public class ContactHelper extends HelperBase {
         type(By.name("email3"), contactData.getEmail3());
     }
 
-    public void fillFormWithAttach(ContactData contactData) {
+    public void fillFormWithAttach(ContactData contactData, boolean isCreation) {
         type(By.name("firstname"), contactData.getName());
         type(By.name("lastname"), contactData.getLastName());
         type(By.name("address"), contactData.getAddress());
@@ -63,6 +67,16 @@ public class ContactHelper extends HelperBase {
         type(By.name("email2"), contactData.getEmail2());
         type(By.name("email3"), contactData.getEmail3());
         attach(By.name("photo"), contactData.getPhoto());
+
+        if(isCreation) {
+            if (contactData.getGroups().size() > 0) {
+                Assert.assertTrue(contactData.getGroups().size() == 1);
+                new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getGroups()
+                        .iterator().next().getName());
+            }
+        } else {
+            Assert.assertFalse(isElementPresent(By.name("new_group")));
+        }
     }
 
     public void pressSubmit(int number) {
@@ -100,10 +114,6 @@ public class ContactHelper extends HelperBase {
 
     private void selectById(int id) {
         wd.findElement(By.cssSelector(String.format("input[value='%s']", id))).click();
-    }
-
-    public boolean isThereAcontact() {
-        return (isElementPresent(By.xpath("//tr[@name=\"entry\"]")));
     }
 
     public List<ContactData> list() {
@@ -167,9 +177,9 @@ public class ContactHelper extends HelperBase {
         wd.findElement(By.xpath(String.format("//a[contains(@href, 'view.php?id=%d')]", contact.getId()))).click();
     }
 
-    public void createWithAttach(ContactData contact, int buttonNumber) {
+    public void createWithAttach(ContactData contact, int buttonNumber, boolean isCreation) {
         initCreation();
-        fillFormWithAttach(contact);
+        fillFormWithAttach(contact, isCreation);
         pressSubmit(buttonNumber); //'Submit' button number in such buttons list
     }
 }

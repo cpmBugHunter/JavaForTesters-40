@@ -6,6 +6,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.pft40.bugHunter.model.ContactData;
 import ru.pft40.bugHunter.model.Contacts;
+import ru.pft40.bugHunter.model.Groups;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -52,9 +53,11 @@ public class ContactCreationTests extends TestBase {
     @Test(enabled = false)
     public void testContactCreationWithPhotoAttach() {
         appMngr.goTo().homePage();
-        Contacts before = appMngr.contact().all();
         File photo = new File("src/test/resources/photo.jpg");
-        ContactData contact = new ContactData().withName("Max").withLastName("Ivanov").withPhoto(photo);
+        Groups groups = appMngr.db().groups();
+        ContactData contact = new ContactData().withName("Max").withLastName("Ivanov").withPhoto(photo)
+                .inGroup(groups.iterator().next());
+        Contacts before = appMngr.db().contacts();
         appMngr.contact().createWithAttach(contact, 2);
         appMngr.goTo().homePage();
         Contacts after = appMngr.contact().all();
