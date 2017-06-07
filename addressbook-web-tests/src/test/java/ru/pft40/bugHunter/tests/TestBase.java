@@ -64,13 +64,28 @@ public class TestBase {
         if (Boolean.getBoolean("verifyUI")) {
             Contacts dbContacts = appMngr.db().contacts();
             Contacts uiContacts = appMngr.contact().all();
-             assertThat(uiContacts, equalTo(dbContacts.stream()
+            assertThat(uiContacts, equalTo(dbContacts.stream()
                     .map((c) -> new ContactData().withId(c.getId())
                             .withName(c.getName()).withLastName(c.getLastName()).withAddress(c.getAddress())
-                            .withEmail(c.getEmail()).withEmail2(c.getEmail2()).withEmail3(c.getEmail3())
-                            .withHomePhone(c.getHomePhone()).withMobilePhone(c.getMobilePhone())
-                            .withWorkPhone(c.getWorkPhone()))
+                            .withEmails(mergeEmails(c)).withAllPhones(mergePhones(c)))
                     .collect(Collectors.toSet())));
         }
     }
+
+    private String mergeEmails(ContactData contact) {
+        return Arrays.asList(contact.getEmail(), contact.getEmail2(), contact.getEmail3()).stream()
+                .filter((s) -> ! s.equals("")).collect(Collectors.joining("\n"));
+    }
+
+    private String mergePhones(ContactData contact) {
+        return Arrays.asList(contact.getHomePhone(), contact.getMobilePhone(), contact.getWorkPhone()).stream()
+                .filter((s) -> ! s.equals(""))
+                .map(TestBase::cleaned)
+                .collect(Collectors.joining("\n"));
+    }
+
+    private static String cleaned(String phone) {
+        return phone.replaceAll("\\s", "").replaceAll("[-()]", "");
+    }
+
 }
