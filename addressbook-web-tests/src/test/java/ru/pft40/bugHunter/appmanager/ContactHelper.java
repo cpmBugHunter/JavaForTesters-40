@@ -7,6 +7,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 import ru.pft40.bugHunter.model.ContactData;
 import ru.pft40.bugHunter.model.Contacts;
+import ru.pft40.bugHunter.model.GroupData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -181,5 +182,11 @@ public class ContactHelper extends HelperBase {
         initCreation();
         fillFormWithAttach(contact, isCreation);
         pressSubmit(buttonNumber); //'Submit' button number in such buttons list
+    }
+
+    public void addToGroup(ContactData contact, GroupData group) {
+        selectById(contact.getId());
+        new Select(wd.findElement(By.name("to_group"))).selectByValue(String.format("'%s'", group.getId()));
+        click(By.name("add"));
     }
 }

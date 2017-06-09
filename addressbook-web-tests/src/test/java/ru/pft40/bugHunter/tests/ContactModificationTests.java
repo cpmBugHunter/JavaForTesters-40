@@ -5,6 +5,8 @@ import org.testng.annotations.Test;
 import ru.pft40.bugHunter.generators.ContactDataGenerator;
 import ru.pft40.bugHunter.model.ContactData;
 import ru.pft40.bugHunter.model.Contacts;
+import ru.pft40.bugHunter.model.GroupData;
+import ru.pft40.bugHunter.model.Groups;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -20,6 +22,49 @@ public class ContactModificationTests extends TestBase {
             appMngr.contact().create(new ContactData().withName("Max").withLastName("Ivanov"), 1);
         }
         appMngr.goTo().homePage();
+    }
+
+    @Test
+    public void testAddContactToGroup() {
+        Contacts allContacts = appMngr.db().contacts();
+        Groups allGroups = appMngr.db().groups();
+        ContactData contact = pickContactForGroupAdding(allContacts, allGroups);
+        Groups groupsBefore = contact.getGroups();
+        GroupData group = pickGroupForAddingTo(allGroups, groupsBefore);
+        appMngr.goTo().homePage();
+        appMngr.contact().addToGroup(contact, group);
+        Groups groupsAfter = contact.getGroups();
+        assertThat(groupsAfter, equalTo(groupsBefore));
+    }
+
+    private GroupData pickGroupForAddingTo(Groups groups, Groups contactInGroups) {
+        Groups vacant;
+        for (GroupData group : contactInGroups) {
+            groups.remove(group);
+        }
+        vacant = groups;
+        GroupData group = vacant.iterator().next();
+        return group;
+    }
+
+    private ContactData pickContactForGroupAdding(Contacts contacts, Groups allGroups) {
+        ContactData contact = contacts.iterator().next();
+        Contacts available = contacts;
+        while (contact.getGroups().size() == allGroups.size()){
+            available.remove(contact);
+            contact = contacts.iterator().next();
+        }
+        if (available.size() == 0) {
+            ContactData newContact = new ContactData().withName("Max").withLastName("Ivanov");
+            appMngr.goTo().homePage();
+            appMngr.contact().create(newContact, 1);
+            Contacts list = appMngr.db().contacts();
+            contact = list.iterator().next();
+        }
+        else {
+            contact = available.iterator().next();
+        }
+        return contact;
     }
 
     @Test

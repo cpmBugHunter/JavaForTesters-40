@@ -58,7 +58,7 @@ public class ContactCreationTests extends TestBase {
         ContactData contact = new ContactData().withName("Max").withLastName("Ivanov").withPhoto(photo)
                 .inGroup(groups.iterator().next());
         Contacts before = appMngr.db().contacts();
-        appMngr.contact().createWithAttach(contact, 2);
+        appMngr.contact().createWithAttach(contact, 2, true);
         appMngr.goTo().homePage();
         Contacts after = appMngr.contact().all();
 

@@ -21,35 +21,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GroupCreationTests extends TestBase {
 
-    @DataProvider
-    public Iterator<Object[]> validGroupsCsv() throws IOException {
-        List<Object[]> list = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/groups.csv")))) {
-            String line = reader.readLine();
-            while (line != null) {
-                String[] split = line.split(";");
-                list.add(new Object[] {new GroupData().withName(split[0]).withHeader(split[1]).withFooter(split[2])});
-                line = reader.readLine();
-            }
-            return list.iterator();
-        }
-    }
-
-    @DataProvider
-    public Iterator<Object[]> validGroupsXml() throws IOException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/groups.xml")))) {
-            StringBuilder xml = new StringBuilder();
-            String line = reader.readLine();
-            while (line != null) {
-                xml.append(line);
-                line = reader.readLine();
-            }
-            XStream xStream = new XStream();
-            xStream.processAnnotations(GroupData.class);
-            List<GroupData> groups = (List<GroupData>)xStream.fromXML(xml.toString());
-            return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
-        }
-    }
 
     @DataProvider
     public Iterator<Object[]> validGroupsJson() throws IOException {
@@ -100,5 +71,35 @@ public class GroupCreationTests extends TestBase {
         assertThat(appMngr.group().count(), equalTo(before.size()));
         Groups after = appMngr.group().all();
         assertThat(after, equalTo(before));
+    }
+
+    @DataProvider
+    public Iterator<Object[]> validGroupsCsv() throws IOException {
+        List<Object[]> list = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/groups.csv")))) {
+            String line = reader.readLine();
+            while (line != null) {
+                String[] split = line.split(";");
+                list.add(new Object[] {new GroupData().withName(split[0]).withHeader(split[1]).withFooter(split[2])});
+                line = reader.readLine();
+            }
+            return list.iterator();
+        }
+    }
+
+    @DataProvider
+    public Iterator<Object[]> validGroupsXml() throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(new File("src/test/resources/groups.xml")))) {
+            StringBuilder xml = new StringBuilder();
+            String line = reader.readLine();
+            while (line != null) {
+                xml.append(line);
+                line = reader.readLine();
+            }
+            XStream xStream = new XStream();
+            xStream.processAnnotations(GroupData.class);
+            List<GroupData> groups = (List<GroupData>)xStream.fromXML(xml.toString());
+            return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();
+        }
     }
 }

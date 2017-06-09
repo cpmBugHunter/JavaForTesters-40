@@ -28,7 +28,7 @@ public class GroupModificationTests extends TestBase {
         Groups before = appMngr.db().groups();
         GroupData modifiedGroup = before.iterator().next();
         GroupData group = new GroupData().withId(modifiedGroup.getId())
-                .withName("ChangeName " + new Date(System.currentTimeMillis()))
+                .withName("ChangeName " + System.currentTimeMillis())
                 .withHeader(modifiedGroup.getHeader())
                 .withFooter(modifiedGroup.getFooter());
         appMngr.goTo().groupPage();
