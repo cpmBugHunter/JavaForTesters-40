@@ -36,7 +36,7 @@ public class DbHelper {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         ContactData contact = (ContactData) session
-                .createQuery(String.format("from ContactData where id = %s", id));
+                .createQuery(String.format("from ContactData where id = %s", id)).getSingleResult();
         return contact;
     }
 

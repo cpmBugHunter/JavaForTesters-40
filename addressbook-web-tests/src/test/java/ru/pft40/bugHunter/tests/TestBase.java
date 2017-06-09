@@ -63,6 +63,7 @@ public class TestBase {
 
         if (Boolean.getBoolean("verifyUI")) {
             Contacts dbContacts = appMngr.db().contacts();
+            appMngr.goTo().homePage();
             Contacts uiContacts = appMngr.contact().all();
             assertThat(uiContacts, equalTo(dbContacts.stream()
                     .map((c) -> new ContactData().withId(c.getId())

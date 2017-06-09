@@ -189,4 +189,10 @@ public class ContactHelper extends HelperBase {
         new Select(wd.findElement(By.name("to_group"))).selectByValue(String.format("%s", group.getId()));
         click(By.name("add"));
     }
+
+    public void removeFromGroup(ContactData contact, GroupData group) {
+        new Select(wd.findElement(By.name("group"))).selectByValue(String.format("%s", group.getId()));
+        selectById(contact.getId());
+        click(By.name("remove"));
+    }
 }
