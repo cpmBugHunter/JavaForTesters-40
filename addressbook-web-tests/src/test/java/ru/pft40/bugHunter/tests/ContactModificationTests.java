@@ -33,8 +33,8 @@ public class ContactModificationTests extends TestBase {
         GroupData group = pickGroupForAddingTo(allGroups, groupsBefore);
         appMngr.goTo().homePage();
         appMngr.contact().addToGroup(contact, group);
-        Groups groupsAfter = contact.getGroups();
-        assertThat(groupsAfter, equalTo(groupsBefore));
+        Groups groupsAfter = appMngr.db().getContact(contact.getId()).getGroups();
+        assertThat(groupsAfter, equalTo(groupsBefore.size() + 1));
     }
 
     private GroupData pickGroupForAddingTo(Groups groups, Groups contactInGroups) {
@@ -50,19 +50,20 @@ public class ContactModificationTests extends TestBase {
     private ContactData pickContactForGroupAdding(Contacts contacts, Groups allGroups) {
         ContactData contact = contacts.iterator().next();
         Contacts available = contacts;
+        //try to exclude contacts which are all groups members
         while (contact.getGroups().size() == allGroups.size()){
             available.remove(contact);
-            contact = contacts.iterator().next();
-        }
-        if (available.size() == 0) {
-            ContactData newContact = new ContactData().withName("Max").withLastName("Ivanov");
-            appMngr.goTo().homePage();
-            appMngr.contact().create(newContact, 1);
-            Contacts list = appMngr.db().contacts();
-            contact = list.iterator().next();
-        }
-        else {
-            contact = available.iterator().next();
+            if (available.isEmpty()) {
+                ContactData newContact = new ContactData().withName("Max").withLastName("Ivanov");
+                appMngr.goTo().homePage();
+                appMngr.contact().create(newContact, 1);
+                available = appMngr.db().contacts();
+                //available.remove(contact);
+                contact = available.iterator().next();
+            }
+            else {
+                contact = available.iterator().next();
+            }
         }
         return contact;
     }
