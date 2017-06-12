@@ -2,29 +2,74 @@ package ru.pft40.mantis.tests;
 
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import ru.lanwen.verbalregex.VerbalExpression;
+import ru.pft40.mantis.model.AccountData;
+import ru.pft40.mantis.model.Accounts;
 import ru.pft40.mantis.model.MailMessage;
 
+import javax.mail.MessagingException;
+import java.io.IOException;
 import java.util.List;
+
+import static org.testng.Assert.assertTrue;
 
 public class ChangePasswordTests extends TestBase {
 
     @BeforeMethod
-    public void startMailServer() {
+    public void ensurePreconditions() {
         appMngr.mail().start();
+        if (appMngr.db().accounts().size() == 1) {
+            //register new user
+            long now = System.currentTimeMillis();
+            String user = String.format("account%s", now);
+            String password = "password";
+            String email = String.format("account%s@localhost.localhostdomain", now);
+            appMngr.registration().start(user, email);
+            List<MailMessage> mailMessages = getMailMessages(2, 10000);
+            String confirmationLink = findConfirmationLink(mailMessages, email);
+            appMngr.registration().finish(confirmationLink, password);
+        }
+        appMngr.goTo().page("/login_page.php");
+        appMngr.registration().login(appMngr.getProperty("web.adminLogin"),
+                appMngr.getProperty("web.adminPassword"));
     }
 
-    /*@Test
-    public void testMantisSendConfirmationLink() throws IOException, MessagingException {
+    @Test
+    public void testAdminResetUserPassword_UserFolowLink_ChangePasswordSuccess() {
+        appMngr.goTo().managePage();
+        appMngr.goTo().manageUsersPage();
+        Accounts accounts = appMngr.db().accounts();
+        AccountData account = accounts.iterator().next();
+        if (account.getUsername().equals("administrator")){ //we should not reset admin password
+            account = accounts.iterator().next();
+        }
+        appMngr.account().resetPassword(account);
+        List<MailMessage> mailMessages = getMailMessages(1, 5000);
+        String confirmationLink = findConfirmationLink(mailMessages, account.getEmail());
+        String newPassword =  "newPassword";
+        appMngr.registration().finish(confirmationLink, newPassword);
 
+        try {
 
+            assertTrue(appMngr.newSession().login(account.getUsername(), newPassword));
 
-        List<MailMessage> mailMessages = appMngr.mail().waitForMail(2, 10000);
-        String confirmationLink = findConfirmationLink(mailMessages, email);
-        appMngr.registration().finish(confirmationLink, password);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-        assertTrue(appMngr.newSession().login(user, password));
-    }*/
+    private List<MailMessage> getMailMessages(int count, int timeout) {
+        List<MailMessage> mailMessages = null;
+        try {
+            mailMessages = appMngr.mail().waitForMail(count, timeout);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return mailMessages;
+    }
 
     private String findConfirmationLink(List<MailMessage> mailMessages, String email) {
         MailMessage mailMessage = mailMessages.stream().filter((m) -> m.to.equals(email)).findFirst().get();

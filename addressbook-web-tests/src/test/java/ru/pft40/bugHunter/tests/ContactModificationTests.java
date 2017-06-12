@@ -67,7 +67,7 @@ public class ContactModificationTests extends TestBase {
         return contact;
     }
 
-    @Test
+    @Test(enabled = false)
     public void testContactModification_GetContactsListFromDB() {
         Contacts before = appMngr.db().contacts();
         ContactData modifiedContact = before.iterator().next();

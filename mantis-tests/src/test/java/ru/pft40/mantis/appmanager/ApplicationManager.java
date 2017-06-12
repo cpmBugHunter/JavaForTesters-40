@@ -5,6 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.BrowserType;
+import ru.pft40.mantis.model.AccountData;
 
 import java.io.File;
 import java.io.FileReader;
@@ -21,6 +22,8 @@ public class ApplicationManager {
     private FtpHelper ftp;
     private MailHelper mailHelper;
     private DbHelper dbHelper;
+    private NavigationHelper navigationHelper;
+    private AccountHelper accountHelper;
 
     public ApplicationManager(String browser) {
         this.browser = browser;
@@ -41,6 +44,13 @@ public class ApplicationManager {
         if (wd != null) {
             wd.quit();
         }
+    }
+
+    public AccountHelper account() {
+        if (accountHelper == null) {
+            accountHelper = new AccountHelper(this);
+        }
+        return accountHelper;
     }
 
     public String getProperty(String key) {
@@ -74,6 +84,13 @@ public class ApplicationManager {
     
     public DbHelper db() {
         return dbHelper;
+    }
+
+    public NavigationHelper goTo() {
+        if (navigationHelper == null) {
+            navigationHelper = new NavigationHelper(this);
+        }
+        return navigationHelper;
     }
 
     public WebDriver getDriver() {

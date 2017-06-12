@@ -1,5 +1,7 @@
 package ru.pft40.mantis.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -21,6 +23,10 @@ public class AccountData {
 
     @Column(name = "email")
     private String email = "";
+
+    public int getId() {
+        return id;
+    }
 
     public String getUsername() {
         return username;
