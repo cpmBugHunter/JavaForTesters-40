@@ -32,6 +32,14 @@ public class DbHelper {
         return group;
     }
 
+    public ContactData getContact(int id) {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        ContactData contact = (ContactData) session
+                .createQuery(String.format("from ContactData where id = %s", id)).getSingleResult();
+        return contact;
+    }
+
     public Groups groups() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
