@@ -26,10 +26,6 @@ dependencies{
     compile 'org.hibernate:hibernate-core:5.2.10.Final'
 }
 
-test.doFirst {
-    jvmArgs "-javaagent:${configurations.agent.singleFile}"
-}
-
 task testGroups (type: Test) {
     useTestNG() {
         suites 'src/test/resources/testng-groups.xml'
@@ -49,6 +45,10 @@ task testGroups (type: Test) {
     systemProperty 'allure.link.tms.pattern', 'https://github.com/allure-framework/allure-docs/issues/{}'
 }
 
+testGroups.doFirst {
+    jvmArgs "-javaagent:${configurations.agent.singleFile}"
+}
+
 task testContacts (type: Test) {
     useTestNG() {
         suites 'src/test/resources/testng-contacts.xml'
@@ -66,4 +66,8 @@ task testContacts (type: Test) {
     systemProperty 'allure.results.directory', 'build/contact/allure-results'
     systemProperty 'allure.link.issue.pattern', 'https://github.com/allure-framework/allure-docs/issues/{}'
     systemProperty 'allure.link.tms.pattern', 'https://github.com/allure-framework/allure-docs/issues/{}'
+}
+
+testContacts.doFirst {
+    jvmArgs "-javaagent:${configurations.agent.singleFile}"
 }
